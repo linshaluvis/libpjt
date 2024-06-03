@@ -1,0 +1,125 @@
+/* App.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2px;
+    font-family: Arial, sans-serif;
+    text-align: center; /* Center the text in the container */
+}
+
+h1 {
+    color: #333;
+}
+
+.category-list, .book-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item, .book-item {
+    background: #f9f9f9;
+    margin: 10px auto; /* Center the list items horizontally */
+    padding: 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    display: flex; /* Use flexbox to align items */
+    flex-direction: column; /* Set flex direction to column */
+    align-items: center; /* Center items horizontally */
+    max-width: 600px; /* Constrain the width of list items */
+    
+}
+
+.category-item:hover, .book-item:hover {
+    background: #f1f1f1;
+}
+
+.book-image img {
+    max-width: 200px;
+    max-height: 200px;
+    margin-bottom: 15px; /* Add margin below the image */
+    border-radius: 5px;
+}
+
+.book-details {
+    text-align: center; /* Center align text */
+}
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+}
+
+.book-item {
+  width: calc(33.33% - 10px); /* Adjust width to fit three items in a row with spacing */
+  margin-bottom: 20px; /* Adjust spacing between rows */
+}
+
+
+.book-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #444;
+    margin-bottom: 5px; /* Add margin below the title */
+}
+
+.book-author, .book-category {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.book-category {
+    margin-top: 5px;
+    font-style: italic;
+}
+.button-container {
+    display: flex;
+    align-items: center; /* Align buttons vertically in the middle */
+  }
+  
+  /* Edit button styles */
+  .edit-button {
+    display: inline-block;
+    margin-right: 10px; /* Adjust spacing between buttons */
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+  }
+  
+  .edit-button:hover {
+    background-color: #042d06;
+  }
+  
+  .edit-button:focus {
+    outline: none;
+  }
+  
+  /* Delete button styles */
+  .delete-button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #f44336;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    width: 100px;
+  }
+  
+  .delete-button:hover {
+    background-color: #6b0404;
+  }
+  
+  .delete-button:focus {
+    outline: none;
+  }
+  

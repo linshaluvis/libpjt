@@ -1,0 +1,53 @@
+/* memberreg.css */
+
+.member-reg-container {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .member-reg-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .member-reg-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .member-reg-container form div {
+    margin-bottom: 10px;
+  }
+  
+  .member-reg-container label {
+    font-weight: bold;
+  }
+  
+  .member-reg-container input[type="text"],
+  .member-reg-container input[type="email"],
+  .member-reg-container input[type="password"],
+  .member-reg-container input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .member-reg-container button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .member-reg-container button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  

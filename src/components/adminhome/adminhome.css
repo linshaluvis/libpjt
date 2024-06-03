@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+*
+{
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body
+{
+    font-family: 'Roboto', sans-serif;
+}
+a
+{
+    text-decoration: none;
+}
+.navbar-custom {
+    background-color: #333;
+    padding: 10px 20px;
+  }
+  
+  .navbar-custom .navbar-brand {
+    color: #fff;
+  }
+  
+  .navbar-custom .nav-link {
+    color: #bbb;
+  }
+  
+  .navbar-custom .nav-link:hover {
+    color: #fff;
+  }
+  
+  .navbar-custom .nav-dropdown-item {
+    color: #333;
+  }
+  
+  .navbar-custom .nav-dropdown-item:hover {
+    background-color: #555;
+    color: #fff;
+  }
+  

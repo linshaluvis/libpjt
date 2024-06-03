@@ -1,0 +1,103 @@
+/* App.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2px;
+    font-family: Arial, sans-serif;
+    text-align: center; /* Center the text in the container */
+}
+
+h1 {
+    color: #333;
+}
+
+.category-list, .book-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-item, .book-item {
+    background: #f9f9f9;
+    margin: 10px auto; /* Center the list items horizontally */
+    padding: 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+    display: flex; /* Use flexbox to align items */
+    flex-direction: column; /* Set flex direction to column */
+    align-items: center; /* Center items horizontally */
+    max-width: 600px; /* Constrain the width of list items */
+    
+}
+
+.category-item:hover, .book-item:hover {
+    background: #f1f1f1;
+}
+
+.book-image img {
+    max-width: 300px;
+    max-height: 200px;
+    margin-bottom: 15px; /* Add margin below the image */
+    border-radius: 5px;
+}
+
+.book-details {
+    text-align: center; /* Center align text */
+}
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribute items evenly along the main axis */
+}
+
+.book-item {
+  width: calc(33.33% - 10px); /* Adjust width to fit three items in a row with spacing */
+  margin-bottom: 20px; /* Adjust spacing between rows */
+}
+
+
+.book-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #444;
+    margin-bottom: 5px; /* Add margin below the title */
+}
+
+.book-author, .book-category {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.book-category {
+    margin-top: 5px;
+    font-style: italic;
+}
+.button-container {
+    display: flex;
+    gap: 10px; /* Adds space between buttons */
+}
+
+.cart-button, .rent-button, .buy-button {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adds space between icon and text */
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.cart-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.rent-button {
+    background-color: #2196F3; /* Blue */
+    color: white;
+}
+
+.buy-button {
+    background-color: #f44336; /* Red */
+    color: white;
+}

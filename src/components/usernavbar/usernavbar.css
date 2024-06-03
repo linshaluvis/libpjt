@@ -1,0 +1,30 @@
+.custom-navbar {
+    background-color: #333; /* Set background color */
+    color: #fff; /* Set text color */
+    height: 100px;
+  }
+  
+  .custom-navbar .nav-link {
+    color: #ffffff; /* Set link text color */
+  }
+  
+  .custom-navbar .nav-link:hover {
+    color: #ccc; /* Set link text color on hover */
+  }
+  .Navbar {
+    width: 100%;
+    background: #8e119f; 
+    color: #fff;
+    padding: 4px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 20;
+  }
+.Navbar-head{
+    color: #fff;
+
+}

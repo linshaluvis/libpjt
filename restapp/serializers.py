@@ -14,29 +14,28 @@ class userserializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'email', 'username']
+        fields = ['first_name', 'last_name', 'email']
 class MemberuserSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    mebimage = serializers.ImageField(required=False)
-
-
     class Meta:
         model = member
-        fields = ['user', 'number', 'mebimage']
+        fields = '__all__'
 
     def update(self, instance, validated_data):
-        user_data = validated_data.pop('user')
-        user = instance.user
-
+        user_data = validated_data.pop('user', None)
+        
+        # Update the user fields if they exist
+        if user_data:
+            user_instance = instance.user
+            user_instance.first_name = user_data.get('first_name', user_instance.first_name)
+            user_instance.last_name = user_data.get('last_name', user_instance.last_name)
+            user_instance.email = user_data.get('email', user_instance.email)
+            user_instance.save()
+        
+        # Update the member fields
         instance.number = validated_data.get('number', instance.number)
-        instance.mebimage = validated_data.get('mebimage', instance.image)
+        instance.mebimage = validated_data.get('mebimage', instance.mebimage)
         instance.save()
-
-        user.first_name = user_data.get('first_name', user.first_name)
-        user.last_name = user_data.get('last_name', user.last_name)
-        user.email = user_data.get('email', user.email)
-        user.username = user_data.get('username', user.username)
-        user.save()
 
         return instance
 class userinfoserializer(serializers.ModelSerializer):

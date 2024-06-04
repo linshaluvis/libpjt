@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import UserNavbar from '../usernavbar/usernavbar';
+
 
 const EditContainer = styled.div`
   max-width: 800px;
@@ -81,7 +83,12 @@ const EditProfile = () => {
           }
         });
 
-        setMember(response.data.member);
+        setMember({
+          ...response.data.member,
+          first_name: response.data.member.user.first_name,
+          last_name: response.data.member.user.last_name,
+          email: response.data.member.user.email,
+        });
       } catch (error) {
         console.error('Error fetching member data:', error);
       }
@@ -92,6 +99,8 @@ const EditProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log( name, value)
+
     setMember({
       ...member,
       [name]: value
@@ -99,15 +108,23 @@ const EditProfile = () => {
   };
 
   const handleFileChange = (e) => {
+
     setProfileImage(e.target.files[0]);
+    console.log(e.target.files[0]); // Log the selected image file
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('first_name', member.user.first_name);
-    formData.append('last_name', member.user.last_name);
-    formData.append('email', member.user.email);
+    console.log(formData)
+    console.log('First Name:', member.first_name);
+    console.log('Last Name:', member.last_name);
+    console.log('Email:', member.email);
+
+    formData.append('first_name', member.first_name);
+    formData.append('last_name', member.last_name);
+    formData.append('email', member.email);
     formData.append('number', member.number);
 
     if (profileImage) {
@@ -123,13 +140,15 @@ const EditProfile = () => {
         }
       });
 
-      navigate('/profile'); // Navigate back to the profile page after saving
+      navigate('/Memberprofile'); // Navigate back to the profile page after saving
     } catch (error) {
       console.error('Error updating profile:', error);
     }
   };
 
   return (
+    <div>
+    <UserNavbar />
     <EditContainer>
       <Header>Edit Profile</Header>
       <Form onSubmit={handleSubmit}>
@@ -141,13 +160,13 @@ const EditProfile = () => {
           />
         )}
         <Label>First Name</Label>
-        <Input type="text" name="first_name" value={member.user?.first_name || ''} onChange={handleChange} />
+        <Input type="text" name="first_name" value={member.first_name || ''} onChange={handleChange} />
 
         <Label>Last Name</Label>
-        <Input type="text" name="last_name" value={member.user?.last_name || ''} onChange={handleChange} />
+        <Input type="text" name="last_name" value={member.last_name || ''} onChange={handleChange} />
 
         <Label>Email</Label>
-        <Input type="email" name="email" value={member.user?.email || ''} onChange={handleChange} />
+        <Input type="email" name="email" value={member.email || ''} onChange={handleChange} />
 
         <Label>Phone Number</Label>
         <Input type="text" name="number" value={member.number || ''} onChange={handleChange} />
@@ -158,6 +177,7 @@ const EditProfile = () => {
         <SaveButton type="submit">Save</SaveButton>
       </Form>
     </EditContainer>
+    </div>
   );
 };
 

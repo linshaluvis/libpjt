@@ -4,13 +4,21 @@ import email_icon from '../Assets/person.png';
 import password_icon from '../Assets/password.png';
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Loginnavbar from '../loginnavbar/loginnavbar';
 
 function LoginSignup() {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const passref = useRef(null);
+    function togglePasswordVisibility() {
+        if (passref.current.type === "text") {
+            passref.current.type = "password";
+        } else {
+            passref.current.type = "text";
+        }
+      }
+    
 
     const handleCreateAccount = () => {
         navigate('/signup');
@@ -73,8 +81,18 @@ function LoginSignup() {
                             ref={passref}
                             placeholder="Password"
                         />
+                         <i
+                        className="fa fa-eye eye-icon"
+                        style={{ color: "#152733" }}
+                        onClick={togglePasswordVisibility}
+                      ></i>
                     </div>
                 </div>
+                <p className="small mb-3 pb-lg-2 text-center">
+                      <Link to={"/forgot_password"} className="text-dark-50">
+                        Forgot password?
+                      </Link>
+                    </p>
                 <div className="submit-container">
                     <div className="submit">
                         <button className="submit" onClick={handleSubmit}>

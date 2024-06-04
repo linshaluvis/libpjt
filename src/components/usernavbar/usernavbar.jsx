@@ -52,7 +52,7 @@ function OffcanvasExample() {
                 <Nav className="  justify-content-end flex-grow-1 pe-3">
                 <Nav.Link href="/userhome">Home</Nav.Link>
                   <Nav.Link href="#action2">Books</Nav.Link>
-                  <Nav.Link href="#action1">Book CART</Nav.Link>
+                  <Nav.Link href="/cart">Book CART</Nav.Link>
                   <Nav.Link href="#action2">Notifications</Nav.Link>
                   <Nav.Link href="/Memberprofile">Profile</Nav.Link>
                   <NavDropdown

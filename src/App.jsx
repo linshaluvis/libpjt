@@ -11,7 +11,11 @@ import Showbook from './components/showbook/showbook';
 import EditBook from './components/editbook/EditBook';
 import Showmember from './components/member/showmember';
 import Memberprofile from './components/user/userprofile';
-import EditProfile from './components/user/editprofile'; // Adjust import path if necessary
+import EditProfile from './components/user/editprofile'; 
+import Cart from './components/cart/Cart'; 
+import Forgot_password from './components/password/ForgotPassword'; 
+
+
 
 
 
@@ -50,6 +54,10 @@ function App() {
       <Route path="/Showmember" element={<Showmember />} />
       <Route path="/Memberprofile" element={<Memberprofile />} />
       <Route path="/edit-profile" element={<EditProfile />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/forgot_password" element={<Forgot_password />} />
+
+
 
 
 

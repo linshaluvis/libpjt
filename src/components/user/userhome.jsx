@@ -71,8 +71,8 @@ function UserHome() {
             });
 
             if (response.status === 201) {
-                alert('Book added to cart successfully!');
-                navigate('/Showmember'); // Redirect to cart page
+                alert('Book purchased successfully!');
+                navigate('/cart'); // Redirect to cart page
             }
         } catch (error) {
             if (error.response) {
@@ -89,12 +89,12 @@ function UserHome() {
             <div>
                 <h1>Welcome, {userName}!</h1> {/* Display welcome message with user's name */}
 
-                <h1>Categories</h1>
+                {/* <h1>Categories</h1>
                 <ul>
                     {categories.map(category => (
                         <li key={category.id}>{category.category_name}</li>
                     ))}
-                </ul>
+                </ul> */}
 
                 <h1 className='text-center'>Books</h1>
 

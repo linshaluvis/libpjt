@@ -363,23 +363,122 @@ def profile_api(request):
 
 
 
+# @api_view(['GET', 'PUT'])
+# @permission_classes([IsAuthenticated])
+# def profile_view(request):
+#     try:
+#         Member = member.objects.get(user=request.user)
+#     except member.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+
+#     if request.method == 'GET':
+#         serializer = MemberuserSerializer(Member)
+#         print(serializer.data)
+#         return Response(serializer.data)
+
+#     elif request.method == 'PUT':
+#         serializer = MemberuserSerializer(Member, data=request.data, partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#             print(serializer.data)
+#             return Response(serializer.data)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
+@parser_classes([MultiPartParser, FormParser])
 def profile_view(request):
     try:
-        Member = member.objects.get(user=request.user)
+        member_instance = member.objects.get(user=request.user)
     except member.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = MemberuserSerializer(member)
-        print(serializer.data)
+        serializer = MemberuserSerializer(member_instance)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = MemberuserSerializer(member, data=request.data, partial=True)
+        member_data = request.data
+        user = request.user
+        member_data = request.data
+
+        # Update CustomUser fields
+        user.first_name = member_data.get('first_name', user.first_name)
+        user.last_name = member_data.get('last_name', user.last_name)
+        user.email = member_data.get('email', user.email)
+        user.save()
+
+        serializer = MemberuserSerializer(member_instance, data=member_data, partial=True)
         if serializer.is_valid():
             serializer.save()
             print(serializer.data)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@permission_classes([IsAuthenticated])
+    
+def cart_items(request):
+    cart_items = cartitem.objects.all()
+    total_price = sum(item.book.price * item.quantity for item in cart_items)
+    items = [
+        {
+            'id': item.id,
+            'book': {
+                'id': item.book.id,
+                'name': item.book.book,
+                'price': item.book.price,
+                'image': item.book.image.url if item.book.image else None
+            },
+            'quantity': item.quantity
+        }
+        for item in cart_items
+    ]
+    return JsonResponse({'items': items, 'total_price': total_price})
+@permission_classes([IsAuthenticated])
+def increase_quantity(request, book_id):
+    cart_item = get_object_or_404(cartitem, book_id=book_id)
+    cart_item.quantity += 1
+    cart_item.save()
+    return cart_items(request)
+@permission_classes([IsAuthenticated])
+def decrease_quantity(request, book_id):
+    cart_item = get_object_or_404(cartitem, book_id=book_id)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    return cart_items(request)
+@permission_classes([IsAuthenticated])
+def remove_item(request, item_id):
+    cart_item = get_object_or_404(cartitem, id=item_id)
+    cart_item.delete()
+    return cart_items(request)
+
+@api_view(['POST'])
+def checkUserName(request):
+    if request.method == 'POST':
+        uname = request.data['userName']
+        if CustomUser.objects.filter(username = uname).exists():
+            return Response({'status':True, 'is_exists': True, 'message':'Username already Exists.!'})
+        else:
+            return Response({'status':True, 'is_exists': False, 'message':''})
+
+@api_view(['POST'])
+def checkPhoneNumber(request):
+    if request.method == 'POST':
+        phn = request.data['mobile']
+        if member.objects.filter(number__iexact = phn).exists():
+            return Response({'status':True, 'is_exists': True, 'message':'Mobile No. already Exists.!'})
+        else:
+            return Response({'status':True, 'is_exists': False, 'message':''})
+@api_view(['POST'])
+def updatePassword(request):
+    if request.method == 'POST':
+        uName = request.data['username']
+
+        if not CustomUser.objects.filter(username = uName).exists():
+            return Response({'status':False, 'message':'Username not found.!'},status=status.HTTP_404_NOT_FOUND)
+        else:
+            user = CustomUser.objects.get(username = uName)
+            pas = request.data['password']
+            user.set_password(pas)
+            user.save()
+            return Response({'status':True, 'message':'Password Updated successfully'}, status=status.HTTP_200_OK)

@@ -11,11 +11,14 @@ from rest_framework import permissions
 from rest_framework.permissions import AllowAny,IsAdminUser,IsAuthenticated
 from rest_framework import status
 from .serializers import BookSerializer
-from .serializers import MemberSerializer,BookuserSerializer,CustomUserSerializer,userinfoserializer
+from .serializers import MemberSerializer,BookuserSerializer,BorrowerSerializer,userinfoserializer
 from .serializers import CartItemSerializer,MemberuserSerializer
+from django.conf import settings
 
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
+from django.core.mail import send_mail
+
 
 
 
@@ -433,25 +436,70 @@ def cart_items(request):
         for item in cart_items
     ]
     return JsonResponse({'items': items, 'total_price': total_price})
+
 @permission_classes([IsAuthenticated])
+@api_view(['POST'])  # Using POST for increase and decrease quantity
 def increase_quantity(request, book_id):
-    cart_item = get_object_or_404(cartitem, book_id=book_id)
-    cart_item.quantity += 1
-    cart_item.save()
-    return cart_items(request)
-@permission_classes([IsAuthenticated])
-def decrease_quantity(request, book_id):
-    cart_item = get_object_or_404(cartitem, book_id=book_id)
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
+    try:
+        cart_item = cartitem.objects.get(id=book_id)
+        cart_item.quantity += 1
         cart_item.save()
-    return cart_items(request)
+        return Response({"message": "Quantity increased", "quantity": cart_item.quantity}, status=200)
+    except cartitem.DoesNotExist:
+        return Response({"error": "Item not found"}, status=404)
+
 @permission_classes([IsAuthenticated])
+@api_view(['POST'])  # Using POST for increase and decrease quantity
+def decrease_quantity(request, book_id):
+    try:
+        cart_item = cartitem.objects.get(id=book_id)
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            cart_item.save()
+            return Response({"message": "Quantity decreased", "quantity": cart_item.quantity}, status=200)
+        else:
+            return Response({"message": "Quantity cannot be less than 1"}, status=400)
+    except cartitem.DoesNotExist:
+        return Response({"error": "Item not found"}, status=404)
+@permission_classes([IsAuthenticated])
+@api_view(['DELETE'])
 def remove_item(request, item_id):
-    cart_item = get_object_or_404(cartitem, id=item_id)
+    cart_item = cartitem.objects.get(id=item_id)
+
     cart_item.delete()
     return cart_items(request)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def checkout(request):
+    user1 = request.user
+    cart_items = cartitem.objects.filter(user=user1)
+
+    for cart_item in cart_items:
+        order.objects.create(
+            book=cart_item.book,
+            quantity=cart_item.quantity,
+            user=user1,
+        )
+    cart_items.delete()
+
+    return JsonResponse({'status': 'success'}, status=200)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def checkout_success(request):
+    user1 = request.user
+    user_orders = order.objects.filter(user=user1)
+    
+    # subject = "Order Confirmation"
+    # message = f"Hello {user1.first_name},\n\nYour order has been placed successfully.\n\n"
+    
+    # for order_obj in user_orders:
+    #     message += f"Book: {order_obj.book.book}\nQuantity: {order_obj.quantity}\n\n"
+    
+    # send_mail(subject, message, settings.EMAIL_HOST_USER, [user1.email])
+    
+    return JsonResponse({'status': 'success', 'user_orders': list(user_orders.values())}, status=200)
 @api_view(['POST'])
 def checkUserName(request):
     if request.method == 'POST':
@@ -482,3 +530,100 @@ def updatePassword(request):
             user.set_password(pas)
             user.save()
             return Response({'status':True, 'message':'Password Updated successfully'}, status=status.HTTP_200_OK)
+from datetime import date, timedelta
+       
+@api_view(['POST'])
+def borrow_book(request, book_id):
+
+        book_instance = book.objects.get(id=book_id)        
+        if book_instance.stock > 0:
+            # Decrease stock and save the book instance
+            book_instance.stock -= 1
+            book_instance.save()
+            
+            borrow_date = date.today()
+            fine = 0
+            due_date = borrow_date + timedelta(days=1)
+
+            borrower = Borrower.objects.create(
+                book=book_instance,
+                user=request.user,
+                borrow_date=borrow_date,
+                return_date=due_date,
+                fine=fine,
+                returned='No'
+            )
+            
+            serializer = BorrowerSerializer(borrower)
+            return Response(serializer.data, status=201)
+        else:
+            return Response({'error': 'Book is out of stock!'}, status=400)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])       
+def borrow_details(request):
+    user1 = request.user
+    books = book.objects.all()
+    borrows = Borrower.objects.filter(user=user1)
+    serialized_books = BookSerializer(books, many=True).data
+    serialized_borrows = BorrowerSerializer(borrows, many=True).data
+    return JsonResponse({'books': serialized_books, 'borrows': serialized_borrows})   
+
+
+def calculate_fine(borrow_date, book_price, book_missing=False):
+    fine_per_day = 5
+    additional_charge = 20  
+    days_difference = (date.today() - borrow_date).days
+    
+    if days_difference > 1:
+        fine = fine_per_day * (days_difference - 1)
+    else:
+        fine = 0
+
+    if book_missing:
+        fine += float(book_price + additional_charge)
+
+    return fine
+
+@api_view(['POST'])
+def return_book(request, pk):
+    borrower = get_object_or_404(Borrower, id=pk)
+    book1 = get_object_or_404(book, id=borrower.book_id) 
+
+    if request.method == 'POST':
+        book_missing = request.data.get('book_missing') == 'yes'
+        fine = calculate_fine(borrower.borrow_date, book1.price, book_missing)
+        borrower.fine = fine
+        borrower.return_date = date.today()
+        borrower.returned = 'Yes'
+        borrower.save(update_fields=['fine', 'returned', 'return_date'])
+        
+        if not book_missing:
+            book1.stock += 1
+            book1.save(update_fields=['stock'])
+            return JsonResponse({'status': 'success', 'message': 'Book returned successfully'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Book is missing'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])       
+# def return_book(request, pk):
+#     try:
+#         borrow = Borrower.objects.get(pk=pk)
+#         borrow.returned = 'Yes'
+#         borrow.save()
+#         return JsonResponse({'status': 'success'})
+#     except Borrower.DoesNotExist:
+#         return JsonResponse({'error': 'Borrow record not found'}, status=404)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])       
+def mark_book_missing(request, pk):
+    try:
+        borrow = Borrower.objects.get(pk=pk)
+        # You can set additional fields or logic for marking a book as missing
+        borrow.returned = 'Missing'
+        borrow.save()
+        return JsonResponse({'status': 'success'})
+    except Borrower.DoesNotExist:
+        return JsonResponse({'error': 'Borrow record not found'}, status=404)

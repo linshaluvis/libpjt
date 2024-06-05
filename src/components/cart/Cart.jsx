@@ -48,16 +48,31 @@ const Cart = () => {
     }
   };
 
-  const increaseQuantity = (itemId) => {
-    handlePostRequest(`${baseURL}/api/cart/increase/${itemId}/`);
+  const increaseQuantity = async (bookId) => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/api/cart/increase/${bookId}/`);
+      console.log('Quantity increased:', response.data);
+    } catch (error) {
+      console.error('Error processing request:', error);
+    }
   };
 
-  const decreaseQuantity = (itemId) => {
-    handlePostRequest(`${baseURL}/api/cart/decrease/${itemId}/`);
+  const decreaseQuantity = async (bookId) => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/api/cart/decrease/${bookId}/`);
+      console.log('Quantity decreased:', response.data);
+    } catch (error) {
+      console.error('Error processing request:', error);
+    }
   };
 
-  const removeItem = (itemId) => {
-    handlePostRequest(`${baseURL}/api/cart/remove/${itemId}/`);
+  const handleRemoveItem = async (itemId) => {
+    try {
+      const response = await axios.delete(`http://127.0.0.1:8000/api/cart/remove/${itemId}/`);
+      console.log('Item removed:', response.data);
+    } catch (error) {
+      console.error('Error processing request:', error);
+    }
   };
 
   return (
@@ -92,13 +107,13 @@ const Cart = () => {
                     <button onClick={() => decreaseQuantity(item.book.id)}>-</button>
                   </div>
                 </td>
-                <td><button className="rem-button btn-danger" onClick={() => removeItem(item.id)}>Remove</button></td>
+                <td><button className="rem-button btn-danger" onClick={() => handleRemoveItem(item.id)}>Remove</button></td>
               </tr>
             ))}
           </tbody>
         </table>
         <h5>Total: ₹{totalPrice.toFixed(2)}</h5>
-        <button onClick={() => window.location.href = '/checkout/'} className="btn btn-success">Checkout</button>
+        <button onClick={() => window.location.href = '/checkout'} className="btn w-25 btn-success">Checkout</button>
       </div>
     </div>
   );

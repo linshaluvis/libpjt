@@ -39,6 +39,18 @@ urlpatterns = [
      path('check_phone_number/', views.checkPhoneNumber, name='check_phone_number'),
     path('check_username/', views.checkUserName, name='check_username'),
     path('update_password/', views.updatePassword, name='update_password'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('checkout_success/', views.checkout_success, name='checkout_success'),
+    path('borrow_book/<int:book_id>/', views.borrow_book, name='borrow_book'),
+    path('borrow_details/', views.borrow_details, name='borrow_details'),
+    path('return_book/<int:pk>/', views.return_book, name='return_book'),
+    path('mark_book_missing/<int:pk>/', views.mark_book_missing, name='mark_book_missing'),
+
+
+
+
+
+
 
 
 

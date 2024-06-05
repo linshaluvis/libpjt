@@ -71,7 +71,6 @@ function UserHome() {
             });
 
             if (response.status === 201) {
-                alert('Book purchased successfully!');
                 navigate('/cart'); // Redirect to cart page
             }
         } catch (error) {
@@ -82,7 +81,28 @@ function UserHome() {
             }
         }
     };
+    const handleBorrowBook = async (bookId) => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await axios.post(`http://localhost:8000/borrow_book/${bookId}/`, {}, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            });
 
+            if (response.status === 201) {
+                alert('ok');
+
+                navigate('/borrow'); // Redirect to cart page
+            }
+        } catch (error) {
+            if (error.response) {
+                alert(error.response.data.error || 'An error occurred');
+            } else {
+                alert('An error occurred');
+            }
+        }
+    };
     return (
         <div>
             <UserNavbar />
@@ -114,10 +134,10 @@ function UserHome() {
 
                                     <br />
                                     <div className="button-container">
-                                        <button className="cart-button">
+                                        <button onClick={() => handleBuyBook(book.id)} className="cart-button">
                                             <FontAwesomeIcon icon={faShoppingCart} /> CART
                                         </button>
-                                        <button className="rent-button">
+                                        <button onClick={() => handleBorrowBook(book.id)} className="rent-button">
                                             <FontAwesomeIcon icon={faShoppingBag} /> RENT
                                         </button>
                                         <button onClick={() => handleBuyBook(book.id)} className="buy-button">

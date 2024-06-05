@@ -1,0 +1,30 @@
+.checkout-success {
+    text-align: center;
+    margin-top: 50px;
+    background-color: #f8f9fa;  /* Light grey background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkout-success h1 {
+    font-size: 2.5em;
+    color: #343a40;  /* Dark grey color */
+  }
+  
+  .checkout-success p {
+    font-size: 1.2em;
+    color: #6c757d;  /* Grey color */
+    margin-bottom: 20px;
+  }
+  
+  .continue-button {
+    padding: 10px 20px;
+    font-size: 1.1em;
+  }
+  
+  .continue-link {
+    text-decoration: none;
+    color: white;
+  }
+  

@@ -14,6 +14,12 @@ import Memberprofile from './components/user/userprofile';
 import EditProfile from './components/user/editprofile'; 
 import Cart from './components/cart/Cart'; 
 import Forgot_password from './components/password/ForgotPassword'; 
+import Checkout from './components/checkout/checkout'; 
+import CheckoutSuccess from './components/checkout/CheckoutSuccess';
+import Borrow from './components/user/borrow';
+
+
+
 
 
 
@@ -56,6 +62,13 @@ function App() {
       <Route path="/edit-profile" element={<EditProfile />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/forgot_password" element={<Forgot_password />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/checkoutsuccess" element={<CheckoutSuccess />} />
+      <Route path="/borrow" element={<Borrow />} />
+
+
+
+
 
 
 

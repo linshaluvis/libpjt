@@ -17,6 +17,12 @@ import Forgot_password from './components/password/ForgotPassword';
 import Checkout from './components/checkout/checkout'; 
 import CheckoutSuccess from './components/checkout/CheckoutSuccess';
 import Borrow from './components/user/borrow';
+import BorrowAdmin from './components/adminhome/BorrowAdmin';
+import Order from './components/adminhome/Order';
+import OverDueAdmin from './components/adminhome/OverdueBooks';
+
+
+
 
 
 
@@ -65,6 +71,12 @@ function App() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/checkoutsuccess" element={<CheckoutSuccess />} />
       <Route path="/borrow" element={<Borrow />} />
+      <Route path="/borrow_admin" element={<BorrowAdmin />} />
+      <Route path="/order" element={<Order />} />
+      <Route path="/OverDueAdmin" element={<OverDueAdmin />} />
+
+
+
 
 
 

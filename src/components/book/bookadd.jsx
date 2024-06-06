@@ -75,7 +75,7 @@ function AddBook() {
        
     <AdminNavbar/>
     <div className="add-book-container">
-      <h2>Add New Book</h2>
+      <h2 className='text-uppercase' >Add New Book</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <label htmlFor="bookName">Book Name:</label>

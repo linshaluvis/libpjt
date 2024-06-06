@@ -19,13 +19,14 @@ function MemberDetails() {
                 console.error('Error fetching member details:', error);
             });
     }, []);
-  
+    const baseURL = 'http://127.0.0.1:8000';
+
 
     return (
         <div>
             <AdminNavbar/>
             <div>
-                <h1 className='text-center'>Member Details</h1>
+                <h1 className='text-center text-uppercase'>Member Details</h1>
                 <br></br>
                 <table>
                     <thead>
@@ -48,8 +49,7 @@ function MemberDetails() {
                                 <td>{member.number}</td>
                                 <td >
                                     <img 
-                                        src={member.mebimage} 
-                                        
+                                        src={`${baseURL}${member.mebimage}`}                                        
                                     />
                                 </td>
                             </tr>

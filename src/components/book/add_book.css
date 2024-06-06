@@ -1,49 +1,74 @@
-/* add_book.css */
+/* Container styling */
 .add-book-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .add-book-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .add-book-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .add-book-container label {
-    margin-bottom: 8px;
-    color: #555;
-  }
-  
-  .add-book-container input,
-  .add-book-container select {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .add-book-container button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: #28a745;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .add-book-container button:hover {
-    background-color: #218838;
-  }
-  
+  background-color: #f8f9fa; /* Light gray background */
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 3rem auto; /* Center the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Heading styling */
+.add-book-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #343a40; /* Dark gray text color */
+}
+
+/* Form styling */
+.add-book-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label styling */
+.add-book-container label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #495057; /* Medium gray text color */
+}
+
+/* Input styling */
+.add-book-container input[type="text"],
+.add-book-container input[type="number"],
+.add-book-container input[type="file"],
+.add-book-container select {
+  padding: 0.75rem;
+  border: 1px solid #ced4da; /* Light gray border */
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #495057; /* Medium gray text color */
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 80%;
+  margin-left: 1.5rem;
+
+}
+
+.add-book-container input[type="text"]:focus,
+.add-book-container input[type="number"]:focus,
+.add-book-container input[type="file"]:focus,
+.add-book-container select:focus {
+  border-color: #741988; /* Bootstrap info color on focus */
+}
+
+/* Button styling */
+.add-book-container button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #5d1e70; /* Bootstrap info color */
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 50%;
+  text-align: center;
+  margin-left: 20%;
+}
+
+.add-book-container button:hover {
+  background-color: #4c0758; /* Darker info color on hover */
+}

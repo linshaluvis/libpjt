@@ -45,6 +45,14 @@ urlpatterns = [
     path('borrow_details/', views.borrow_details, name='borrow_details'),
     path('return_book/<int:pk>/', views.return_book, name='return_book'),
     path('mark_book_missing/<int:pk>/', views.mark_book_missing, name='mark_book_missing'),
+    path('borrow_admin/', views.borrow_admin, name='borrow_admin'),
+    path('order_data/', views.order_data, name='order_data'),
+    path('overdue_books/', views.overdue_books_view, name='overdue_books'),
+    path('overdue_booksUser/', views.overdue_booksUser, name='overdue_booksUser'),
+    
+
+
+
 
 
 

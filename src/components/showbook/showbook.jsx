@@ -48,12 +48,12 @@ const Showbook = () => {
        
     <AdminNavbar/>
         <div>
-            <h1>Categories</h1>
+            {/* <h1>Categories</h1>
             <ul>
                 {categories.map(category => (
                     <li key={category.id}>{category.category_name}</li>
                 ))}
-            </ul>
+            </ul> */}
 
             <h1 className='text-center'>Books</h1>
             

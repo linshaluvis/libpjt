@@ -627,3 +627,60 @@ def mark_book_missing(request, pk):
         return JsonResponse({'status': 'success'})
     except Borrower.DoesNotExist:
         return JsonResponse({'error': 'Borrow record not found'}, status=404)
+    
+def borrow_admin(request):
+    data = Borrower.objects.all()
+    serialized_data = BorrowerSerializer(data, many=True).data
+    print(serialized_data)
+    return JsonResponse(serialized_data, safe=False)
+from .serializers import OrderSerializer
+
+def order_data(request):
+    data = order.objects.all()
+    serialized_data = OrderSerializer(data, many=True).data
+    return JsonResponse({'orders': serialized_data}, safe=False)
+
+def overdue_book_admin():
+    today = date.today()
+    overdue_books = Borrower.objects.filter(return_date__lt=today, returned='No').select_related('user', 'book')
+    print(overdue_books)
+    return overdue_books
+
+def overdue_books_view(request):
+    overdue_books = overdue_book_admin()
+    print(overdue_books)
+    overdue_books_data = [
+        {
+            'book_title': borrow.book.book,
+            'borrow_date': borrow.borrow_date,
+            'return_date': borrow.return_date,
+            'user': {
+                'first_name': borrow.user.first_name,
+                'last_name': borrow.user.last_name
+            }
+        }
+        for borrow in overdue_books
+    ]
+    print(overdue_books_data)
+
+    return JsonResponse({'overdue_books': overdue_books_data})
+from django.utils import timezone
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  
+def overdue_booksUser(request):
+        user = request.user
+        overdue_books = Borrower.objects.filter(user=user, return_date__lt=timezone.now(), returned=False)
+
+        overdue_books_list = [
+            {
+                'id': book.id,
+                'book': {
+                    'id': book.book.id,
+                    'title': book.book.book,
+                },
+                'due_date': book.return_date
+            }
+            for book in overdue_books
+        ]
+
+        return JsonResponse(overdue_books_list, safe=False)

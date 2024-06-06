@@ -39,7 +39,7 @@ function AddCategory() {
     <AdminNavbar/>
   
     <div className="add-category-container">
-      <h2>Add New Category</h2>
+      <h2 className='text-uppercase'>Add New Category</h2>
       <form onSubmit={handleCategorySubmit}>
         <div>
           <label htmlFor="categoryName">Category Name:</label>

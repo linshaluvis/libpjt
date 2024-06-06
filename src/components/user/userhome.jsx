@@ -11,6 +11,7 @@ function UserHome() {
     const [categories, setCategories] = useState([]);
     const [books, setBooks] = useState([]);
     const [userName, setUserName] = useState('');
+    const [overdueBooks, setOverdueBooks] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,45 +21,64 @@ function UserHome() {
             return;
         }
 
-        // Fetch user's information
-        axios.get('http://localhost:8000/api/user-info/', {
-            headers: {
-                'Authorization': `Token ${token}`
+        const fetchUserInfo = async () => {
+            try {
+                const userInfoResponse = await axios.get('http://localhost:8000/api/user-info/', {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+                setUserName(userInfoResponse.data.first_name);
+            } catch (error) {
+                console.error('There was an error fetching user information!', error);
+                navigate('/login');
             }
-        })
-        .then(response => {
-            setUserName(response.data.first_name);
-        })
-        .catch(error => {
-            console.error('There was an error fetching user information!', error);
-            navigate('/login');
-        });
+        };
 
-        // Fetch categories
-        axios.get('http://localhost:8000/api/categories/', {
-            headers: {
-                'Authorization': `Token ${token}`
+        const fetchCategories = async () => {
+            try {
+                const categoriesResponse = await axios.get('http://localhost:8000/api/categories/', {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+                setCategories(categoriesResponse.data);
+            } catch (error) {
+                console.error('There was an error fetching the categories!', error);
             }
-        })
-        .then(response => {
-            setCategories(response.data);
-        })
-        .catch(error => {
-            console.error('There was an error fetching the categories!', error);
-        });
+        };
 
-        // Fetch books
-        axios.get('http://localhost:8000/api/books/', {
-            headers: {
-                'Authorization': `Token ${token}`
+        const fetchBooks = async () => {
+            try {
+                const booksResponse = await axios.get('http://localhost:8000/api/books/', {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+                setBooks(booksResponse.data);
+            } catch (error) {
+                console.error('There was an error fetching the books!', error);
             }
-        })
-        .then(response => {
-            setBooks(response.data);
-        })
-        .catch(error => {
-            console.error('There was an error fetching the books!', error);
-        });
+        };
+
+        const fetchOverdueBooks = async () => {
+            try {
+                const overdueBooksResponse = await axios.get('http://localhost:8000/overdue_booksUser/', {
+                    headers: {
+                        'Authorization': `Token ${token}`
+                    }
+                });
+                setOverdueBooks(overdueBooksResponse.data);
+                console.log(overdueBooksResponse.data)
+            } catch (error) {
+                console.error('There was an error fetching overdue books!', error);
+            }
+        };
+
+        fetchUserInfo();
+        fetchCategories();
+        fetchBooks();
+        fetchOverdueBooks();
     }, [navigate]);
 
     const handleBuyBook = async (bookId) => {
@@ -81,6 +101,7 @@ function UserHome() {
             }
         }
     };
+
     const handleBorrowBook = async (bookId) => {
         const token = localStorage.getItem('token');
         try {
@@ -91,9 +112,8 @@ function UserHome() {
             });
 
             if (response.status === 201) {
-                alert('ok');
-
-                navigate('/borrow'); // Redirect to cart page
+                alert('Book borrowed successfully!');
+                navigate('/borrow'); // Redirect to borrow page
             }
         } catch (error) {
             if (error.response) {
@@ -103,18 +123,29 @@ function UserHome() {
             }
         }
     };
+
     return (
         <div>
             <UserNavbar />
             <div>
-                <h1>Welcome, {userName}!</h1> {/* Display welcome message with user's name */}
+                <h1>Welcome, {userName}!</h1>
 
-                {/* <h1>Categories</h1>
-                <ul>
-                    {categories.map(category => (
-                        <li key={category.id}>{category.category_name}</li>
-                    ))}
-                </ul> */}
+                {/* Overdue Books Alert */}
+                {overdueBooks.length > 0 && (
+                    <div className="alert alert-danger alert-dismissible fade show mt-5" role="alert">
+                        <h4 className="alert-heading">Overdue Books</h4>
+                        <ul>
+                            {overdueBooks.map(book => (
+                                <li key={book.id}>
+                                    Your book "{book.book_title}" is overdue. Please return it as soon as possible.
+                                </li>
+                            ))}
+                        </ul>
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                )}
 
                 <h1 className='text-center'>Books</h1>
 

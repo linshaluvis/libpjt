@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EditBook.css'; // Ensure to import the CSS file
 
+import AdminNavbar from '../adminnavbar/adminnavbar'; 
+
+
 const EditBook = () => {
     const { id } = useParams();
     const [formData, setFormData] = useState({
@@ -85,6 +88,9 @@ const EditBook = () => {
     };
 
     return (
+        <div>
+       
+        <AdminNavbar/>
         <div className="edit-book-container">
             <h1>Edit Book</h1>
             <form onSubmit={handleSubmit}>
@@ -123,6 +129,7 @@ const EditBook = () => {
                 </div>
                 <button type="submit">Update Book</button>
             </form>
+        </div>
         </div>
     );
 };

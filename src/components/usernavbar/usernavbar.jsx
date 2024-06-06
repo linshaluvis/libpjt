@@ -59,11 +59,10 @@ function OffcanvasExample() {
                     title="Book Details"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
-                    <NavDropdown.Item href="#action3">Book Details</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
+                    <NavDropdown.Item href="">
                     Order Details
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="#action3">Rent Details</NavDropdown.Item>
+                    <NavDropdown.Item href="/borrow">Rent Details</NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item href="#action5">
                     Overdue

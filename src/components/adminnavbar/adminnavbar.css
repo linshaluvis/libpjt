@@ -1,30 +1,87 @@
-.custom-navbar {
-    background-color: #333; /* Set background color */
-    color: #fff; /* Set text color */
-    height: 100px;
-  }
-  
-  .custom-navbar .nav-link {
-    color: #ffffff; /* Set link text color */
-  }
-  
-  .custom-navbar .nav-link:hover {
-    color: #ccc; /* Set link text color on hover */
-  }
-  .Navbar {
-    width: 100%;
-    background: #8e119f; 
-    color: #fff;
-    padding: 4px 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 20;
-  }
-.Navbar-head{
-    color: #fff;
 
+/* General Navbar Styles */
+.custom-navbar {
+  background-color: #343a40; /* Dark background color */
+  color: #fff; /* Text color */
+}
+
+.custom-navbar .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+/* General Navbar Styles */
+.custom-navbar {
+  background-color: #343a40; /* Dark background color */
+  color: #fff; /* Text color */
+}
+
+.custom-navbar .navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+  width: 35px; /* Reduce the width */
+  height: 30px; /* Reduce the height */
+}
+
+.custom-navbar .navbar-toggler-icon {
+  text-align: center;
+  width: 20px; /* Adjust icon width */
+  height: 20px; /* Adjust icon height */
+  background-size: 20px 20px; /* Adjust background size */
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+/* Offcanvas Styles */
+.offcanvas-header {
+  background-color: #495057; /* Darker background for the header */
+  color: #ffffff;
+}
+
+.offcanvas-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.offcanvas-body {
+  background-color: #343a40; /* Match the navbar background */
+  color: #ffffff;
+}
+
+/* Nav Links */
+.nav-link {
+  color: #ffffff;
+}
+
+.nav-link:hover {
+  color: #17a2b8; /* Bootstrap info color on hover */
+}
+
+.nav-link.active {
+  color: #17a2b8; /* Bootstrap info color for active links */
+}
+
+/* Nav Dropdown */
+.nav-dropdown .dropdown-item {
+  color: #343a40;
+}
+
+.nav-dropdown .dropdown-item:hover {
+  background-color: #17a2b8;
+  color: #ffffff;
+}
+
+.nav-dropdown .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1);
 }

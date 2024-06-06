@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import restapi,CustomUser,category,book,member,cartitem,Borrower
+from .models import restapi,CustomUser,category,book,member,cartitem,Borrower,order
 
 class restserializer(serializers.ModelSerializer):
     class Meta:
@@ -110,7 +110,18 @@ class CartItemSerializer(serializers.ModelSerializer):
     
 class BorrowerSerializer(serializers.ModelSerializer):
     book = BookSerializer()
+    user = UserSerializer()
+
 
     class Meta:
         model = Borrower
         fields = ['id', 'book', 'user', 'borrow_date', 'return_date', 'fine', 'returned']
+class OrderSerializer(serializers.ModelSerializer):
+    book = BookSerializer()
+    user = UserSerializer()
+
+    class Meta:
+        model = order
+        fields = '__all__'
+
+    

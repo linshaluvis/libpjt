@@ -40,5 +40,32 @@ a
   .navbar-custom .nav-dropdown-item:hover {
     background-color: #555;
     color: #fff;
+  }.card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: transform 0.2s;
+    overflow: hidden; /* Ensures the image fits inside the card */
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-img-top {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card-body {
+    text-align: center;
+  }
+  
+  .uniform-img {
+    height: 250px; /* Set a fixed height for uniformity */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    width: 100%;
+  }
+  
+  .row {
+    gap: 100px; /* Adds padding between the cards */
   }
   

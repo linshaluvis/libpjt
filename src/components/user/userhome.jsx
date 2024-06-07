@@ -6,6 +6,9 @@ import './userhome.css';
 import UserNavbar from '../usernavbar/usernavbar';
 import axios from 'axios';
 import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Button from '@mui/material/Button';
 
 function UserHome() {
     const [categories, setCategories] = useState([]);
@@ -69,7 +72,6 @@ function UserHome() {
                     }
                 });
                 setOverdueBooks(overdueBooksResponse.data);
-                console.log(overdueBooksResponse.data)
             } catch (error) {
                 console.error('There was an error fetching overdue books!', error);
             }
@@ -127,29 +129,26 @@ function UserHome() {
     return (
         <div>
             <UserNavbar />
-            <div>
-                <h1>Welcome, {userName}!</h1>
+            <div className="container mt-5">
+                <h1 className="text-center mb-4">Welcome, {userName}!</h1>
 
                 {/* Overdue Books Alert */}
                 {overdueBooks.length > 0 && (
-                    <div className="alert alert-danger alert-dismissible fade show mt-5" role="alert">
-                        <h4 className="alert-heading">Overdue Books</h4>
+                    <Alert severity="error" className="mt-5">
+                        <AlertTitle>Overdue Books</AlertTitle>
                         <ul>
                             {overdueBooks.map(book => (
                                 <li key={book.id}>
-                                    Your book "{book.book_title}" is overdue. Please return it as soon as possible.
+                                    Your book "{book.book.title}" is overdue. Please return it as soon as possible.
                                 </li>
                             ))}
                         </ul>
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    </Alert>
                 )}
 
-                <h1 className='text-center'>Books</h1>
+                <h2 className="text-center mt-5">Books</h2>
 
-                <Grid container spacing={2} direction="row">
+                <Grid container spacing={2} className="mt-3">
                     {books.map(book => (
                         <Grid item xs={12} sm={6} md={4} key={book.id}>
                             <div className="book-item">
@@ -161,19 +160,20 @@ function UserHome() {
                                     <div className="book-author">by {book.author}</div>
                                     <div className="book-price">₹ {book.price}</div>
                                     <div className="book-category">Category: {book.category.category_name}</div>
-                                    <div className="book-category">Stock: {book.stock}</div>
-
-                                    <br />
-                                    <div className="button-container">
-                                        <button onClick={() => handleBuyBook(book.id)} className="cart-button">
-                                            <FontAwesomeIcon icon={faShoppingCart} /> CART
-                                        </button>
-                                        <button onClick={() => handleBorrowBook(book.id)} className="rent-button">
-                                            <FontAwesomeIcon icon={faShoppingBag} /> RENT
-                                        </button>
-                                        <button onClick={() => handleBuyBook(book.id)} className="buy-button">
-                                            <FontAwesomeIcon icon={faDollarSign} /> BUY
-                                        </button>
+                                    <div className="book-stock">Stock: {book.stock}</div>
+                                    <div className="book-status">
+                                        {book.stock > 0 ? <p>Status: Available</p> : <p>Status: Out of Stock</p>}
+                                    </div>
+                                    <div className="button-container mt-3">
+                                        <Button variant="contained" color="primary" onClick={() => handleBuyBook(book.id)}>
+                                            <FontAwesomeIcon icon={faShoppingCart} />  Cart
+                                        </Button>
+                                        <Button variant="contained" color="secondary" className="mx-2" onClick={() => handleBorrowBook(book.id)}>
+                                            <FontAwesomeIcon icon={faShoppingBag} /> Rent
+                                        </Button>
+                                        <Button variant="contained" color="success" onClick={() => handleBuyBook(book.id)}>
+                                            <FontAwesomeIcon icon={faDollarSign} /> Buy
+                                        </Button>
                                     </div>
                                 </div>
                             </div>

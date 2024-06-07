@@ -1,0 +1,23 @@
+.container {
+    padding: 20px;
+  }
+  
+  .order-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  thead.thead-dark th {
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .table {
+    margin-top: 20px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  

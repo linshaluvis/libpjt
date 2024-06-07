@@ -669,7 +669,8 @@ from django.utils import timezone
 @permission_classes([IsAuthenticated])  
 def overdue_booksUser(request):
         user = request.user
-        overdue_books = Borrower.objects.filter(user=user, return_date__lt=timezone.now(), returned=False)
+        print(user)
+        overdue_books = Borrower.objects.filter(user=user, return_date__lt=timezone.now(), returned='No')
 
         overdue_books_list = [
             {
@@ -682,5 +683,27 @@ def overdue_booksUser(request):
             }
             for book in overdue_books
         ]
-
+        print(overdue_books_list)
         return JsonResponse(overdue_books_list, safe=False)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  
+def userorder(request):
+    user1 = request.user
+    data = order.objects.filter(user=user1)
+    pro = book.objects.all()
+    categories = category.objects.all()
+
+    order_data = [
+            {
+                'book': {
+                    'image': {
+                        'url': order.book.image.url
+                    },
+                    'book': order.book.book,
+                },
+                'quantity': order.quantity
+            }
+            for order in data
+    ]
+    print(order_data)
+    return JsonResponse(order_data, safe=False)

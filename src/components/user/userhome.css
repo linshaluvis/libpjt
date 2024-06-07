@@ -90,6 +90,7 @@ h1 {
 .cart-button {
     background-color: #4CAF50; /* Green */
     color: white;
+
 }
 
 .rent-button {
@@ -101,3 +102,57 @@ h1 {
     background-color: #f44336; /* Red */
     color: white;
 }
+.container {
+    padding: 20px;
+  }
+  
+  .book-item {
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    background-color: #f9f9f9;
+  }
+  
+  .book-image img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .book-details {
+    margin-top: 10px;
+  }
+  
+  .book-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .book-author {
+    color: #555;
+  }
+  
+  .book-price {
+    color: #007bff;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  .book-category,
+  .book-stock,
+  .book-status {
+    margin-top: 5px;
+  }
+  
+  .button-container button {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .button-container button:not(:last-child) {
+    margin-right: 8px;
+  }
+  

@@ -85,3 +85,72 @@
 .nav-dropdown .dropdown-divider {
   border-color: rgba(255, 255, 255, 0.1);
 }
+/* Custom navbar background gradient */
+.bg-gradient-custom {
+  background: linear-gradient(135deg, #f06, #4a90e2);
+  border-bottom: 2px solid #fff;
+}
+
+/* Navbar container styling */
+.Navbar {
+  padding: 10px 20px;
+}
+
+/* Brand text styling */
+.Navbar-head {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.8rem;
+  color: white;
+}
+
+/* Offcanvas styling */
+.offcanvas-custom {
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+}
+
+.offcanvas-title-custom {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Offcanvas body custom styling */
+.offcanvas-body-custom .nav-link, .nav-dropdown-item {
+  color: white !important;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  margin: 5px 0;
+  padding: 10px;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.offcanvas-body-custom .nav-link:hover, .nav-dropdown-item:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+/* Custom styling for the logout link */
+.logout-link {
+  color: #ff4d4d !important;
+}
+
+.logout-link:hover {
+  background-color: rgba(255, 77, 77, 0.1);
+}
+
+/* Add custom spacing and padding */
+.nav-link, .nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive styling */
+@media (max-width: 767.98px) {
+  .nav-link, .nav-dropdown-item {
+    margin: 5px 0;
+    padding: 10px 15px;
+  }
+}

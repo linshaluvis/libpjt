@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import UserNavbar from '../usernavbar/usernavbar';
 
-
 const Container = styled.div`
     padding: 20px;
 `;
@@ -20,9 +19,10 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.th`
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    padding: 8px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
 `;
 
 const TableData = styled.td`
@@ -52,7 +52,6 @@ const DangerButton = styled(Button)`
 `;
 
 const Borrow = () => {
-    const [books, setBooks] = useState([]);
     const [borrows, setBorrows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -62,13 +61,6 @@ const Borrow = () => {
 
         const fetchData = async () => {
             try {
-                const booksResponse = await axios.get('http://localhost:8000/api/books/', {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
-                setBooks(booksResponse.data);
-
                 const borrowsResponse = await axios.get('http://localhost:8000/borrow_details/', {
                     headers: {
                         'Authorization': `Token ${token}`
@@ -96,9 +88,11 @@ const Borrow = () => {
                     'Authorization': `Token ${token}`
                 }
             });
+
             if (response.data.status === 'success') {
+                // Optimistically update the state to reflect the change immediately
                 setBorrows(borrows.map(borrow => 
-                    borrow.id === id ? { ...borrow, returned: 'Yes' } : borrow
+                    borrow.id === id ? { ...borrow, returned: 'Yes', fine: response.data.fine } : borrow
                 ));
             } else {
                 console.error('Error:', response.data.message);
@@ -118,51 +112,51 @@ const Borrow = () => {
 
     return (
         <div>
-        <UserNavbar />
-        <Container>
-            <h2>My Borrowed Books</h2>
-            <TableContainer>
-                <Table>
-                    <thead>
-                        <tr>
-                            <TableHeader>Book Title</TableHeader>
-                            <TableHeader>Borrow Date</TableHeader>
-                            <TableHeader>Return Date</TableHeader>
-                            <TableHeader>Returned</TableHeader>
-                            <TableHeader>Fine</TableHeader>
-                            <TableHeader>Actions</TableHeader>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {borrows.map(borrow => (
-                            <tr key={borrow.id}>
-                                <TableData>{borrow.book.book}</TableData>
-                                <TableData>{borrow.borrow_date}</TableData>
-                                <TableData>{borrow.return_date}</TableData>
-                                <TableData>{borrow.returned}</TableData>
-                                <TableData>{borrow.fine}</TableData>
-                                <TableData>
-                                    {borrow.returned === 'No' && (
-                                        <>
-                                            <DangerButton 
-                                                onClick={() => handleReturnBook(borrow.id, true)}
-                                            >
-                                                Missing Book
-                                            </DangerButton>
-                                            <SuccessButton 
-                                                onClick={() => handleReturnBook(borrow.id, false)}
-                                            >
-                                                Return Book
-                                            </SuccessButton>
-                                        </>
-                                    )}
-                                </TableData>
+            <UserNavbar />
+            <Container>
+                <h2>My Borrowed Books</h2>
+                <TableContainer>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <TableHeader>Book Title</TableHeader>
+                                <TableHeader>Borrow Date</TableHeader>
+                                <TableHeader>Return Date</TableHeader>
+                                <TableHeader>Returned</TableHeader>
+                                <TableHeader>Fine</TableHeader>
+                                <TableHeader>Actions</TableHeader>
                             </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </TableContainer>
-        </Container>
+                        </thead>
+                        <tbody>
+                            {borrows.map(borrow => (
+                                <tr key={borrow.id}>
+                                    <TableData>{borrow.book.book}</TableData>
+                                    <TableData>{borrow.borrow_date}</TableData>
+                                    <TableData>{borrow.return_date}</TableData>
+                                    <TableData>{borrow.returned}</TableData>
+                                    <TableData>{borrow.fine}</TableData>
+                                    <TableData>
+                                        {borrow.returned === 'No' && (
+                                            <>
+                                                <DangerButton 
+                                                    onClick={() => handleReturnBook(borrow.id, true)}
+                                                >
+                                                    Missing Book
+                                                </DangerButton>
+                                                <SuccessButton 
+                                                    onClick={() => handleReturnBook(borrow.id, false)}
+                                                >
+                                                    Return Book
+                                                </SuccessButton>
+                                            </>
+                                        )}
+                                    </TableData>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </TableContainer>
+            </Container>
         </div>
     );
 };

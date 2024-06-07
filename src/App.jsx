@@ -20,6 +20,10 @@ import Borrow from './components/user/borrow';
 import BorrowAdmin from './components/adminhome/BorrowAdmin';
 import Order from './components/adminhome/Order';
 import OverDueAdmin from './components/adminhome/OverdueBooks';
+import Orderuser from './components/user/orderuser';
+import Notifications from './components/user/notificationuser';
+
+
 
 
 
@@ -74,6 +78,10 @@ function App() {
       <Route path="/borrow_admin" element={<BorrowAdmin />} />
       <Route path="/order" element={<Order />} />
       <Route path="/OverDueAdmin" element={<OverDueAdmin />} />
+      <Route path="/orderuser" element={<Orderuser />} />
+      <Route path="/notifications" element={<Notifications />} />
+
+
 
 
 

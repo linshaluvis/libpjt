@@ -71,55 +71,185 @@ h1 {
     margin-top: 5px;
     font-style: italic;
 }
+/* Main container for the content */
+.content-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Styling for each book item */
+.book-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the book image */
+.book-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Styling for the book details */
+.book-details {
+  padding: 15px;
+  text-align: center;
+}
+
+.book-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.book-author {
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.book-price {
+  color: #007bff;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.book-category {
+  color: #888;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+/* Button container styling */
 .button-container {
-    display: flex;
-    align-items: center; /* Align buttons vertically in the middle */
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Space between buttons */
+  margin-bottom: 10px;
+
+}
+
+/* Common styling for both buttons */
+.edit-button, .delete-button {
+  display: inline-block; /* Inline-block to allow width and height */
+  padding: 10px 20px; /* Padding for clickable area */
+  text-decoration: none; /* Remove underline */
+  font-size: 1em; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  width: 100px; /* Fixed width for both buttons */
+  text-align: center; /* Center text inside the button */
+  transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Transitions for hover effect */
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+/* Specific styling for the Edit button */
+.edit-button {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  border: 2px solid transparent; /* Border for focus */
+  margin-bottom: 10px;
+
+}
+
+.edit-button:hover {
+  background-color: #218838; /* Darker green on hover */
+  color: white; /* Maintain white text on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Specific styling for the Delete button */
+.delete-button {
+  background-color: #dc3545; /* Red background */
+  color: white; /* White text */
+  border: 2px solid transparent; /* Border for focus */
+  margin-bottom: 10px;
+
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+  color: white; /* Maintain white text on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 767px) {
+  .content-container {
+    padding: 10px;
   }
-  
-  /* Edit button styles */
-  .edit-button {
-    display: inline-block;
-    margin-right: 10px; /* Adjust spacing between buttons */
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    width: 100px;
+  .book-details {
+    padding: 10px;
   }
-  
-  .edit-button:hover {
-    background-color: #042d06;
+}
+
+/* Styling for each book item */
+.book-item {
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  width: 250px;
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the book image */
+.book-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Styling for the book details */
+.book-details {
+  padding: 15px;
+  text-align: center;
+}
+
+.book-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.book-author {
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.book-price {
+  color: #007bff;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.book-category {
+  color: #888;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+
+
+
+/* Responsive styling for smaller screens */
+@media (max-width: 767px) {
+  .content-container {
+    padding: 10px;
   }
-  
-  .edit-button:focus {
-    outline: none;
+  .book-details {
+    padding: 10px;
   }
-  
-  /* Delete button styles */
-  .delete-button {
-    display: inline-block;
-    padding: 8px 16px;
-    background-color: #f44336;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    width: 100px;
-  }
-  
-  .delete-button:hover {
-    background-color: #6b0404;
-  }
-  
-  .delete-button:focus {
-    outline: none;
-  }
-  
+}

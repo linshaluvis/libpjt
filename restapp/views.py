@@ -14,10 +14,16 @@ from .serializers import BookSerializer
 from .serializers import MemberSerializer,BookuserSerializer,BorrowerSerializer,userinfoserializer
 from .serializers import CartItemSerializer,MemberuserSerializer
 from django.conf import settings
-
+from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import  authentication_classes
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
 from django.core.mail import send_mail
+import logging
+
 
 
 
@@ -209,11 +215,7 @@ def memberreg(request):
     else:
         print(serializer.errors)  # Print validation errors to console for debugging
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-from rest_framework import generics
-from rest_framework import viewsets
-from rest_framework.decorators import action
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import  authentication_classes
+
 
 
 class BookViewSet(viewsets.ModelViewSet):
@@ -245,31 +247,6 @@ class BookViewSet(viewsets.ModelViewSet):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class BookViewSet(viewsets.ModelViewSet):
-#     queryset = book.objects.all()
-#     serializer_class = BookuserSerializer
-#     parser_classes = (MultiPartParser, FormParser)
-
-#     @action(detail=True, methods=['get', 'put'])
-#     def edit(self, request, pk=None):
-#         book_instance = get_object_or_404(book, pk=pk)
-#         if request.method == 'GET':
-#             serializer = BookSerializer(book_instance)
-#             categories = category.objects.all()
-#             category_serializer = CategorySerializer(categories, many=True)
-#             return Response({
-#                 'book': serializer.data,
-#                 'categories': category_serializer.data
-#             })
-#         elif request.method == 'PUT':
-#             serializer = BookSerializer(book_instance, data=request.data)
-#             print(request.data)
-#             print(book_instance)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 print(serializer.data)
-#                 return Response(serializer.data)
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = category.objects.all()
@@ -305,15 +282,6 @@ def buy_book(request, book_id):
     except book.DoesNotExist:
         return Response({'error': 'Book not found!'}, status=status.HTTP_404_NOT_FOUND)
 
-# class UserInfoView(APIView):
-
-#     def get(self, request):
-#         user=request.user
-#         print('User:', user)
-#         serializer = userinfoserializer(user)
-#         print(serializer.data)
-#         return Response(serializer.data)
-import logging
 
 class UserInfoView(APIView):
     authentication_classes = [ TokenAuthentication]
@@ -366,26 +334,6 @@ def profile_api(request):
 
 
 
-# @api_view(['GET', 'PUT'])
-# @permission_classes([IsAuthenticated])
-# def profile_view(request):
-#     try:
-#         Member = member.objects.get(user=request.user)
-#     except member.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == 'GET':
-#         serializer = MemberuserSerializer(Member)
-#         print(serializer.data)
-#         return Response(serializer.data)
-
-#     elif request.method == 'PUT':
-#         serializer = MemberuserSerializer(Member, data=request.data, partial=True)
-#         if serializer.is_valid():
-#             serializer.save()
-#             print(serializer.data)
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
@@ -475,16 +423,35 @@ def checkout(request):
     user1 = request.user
     cart_items = cartitem.objects.filter(user=user1)
 
+    order_details = []
     for cart_item in cart_items:
-        order.objects.create(
+        order_instance = order.objects.create(
             book=cart_item.book,
             quantity=cart_item.quantity,
             user=user1,
         )
+        order_details.append({
+            'book_name': cart_item.book.book,  # Assuming book has a title field
+            'quantity': cart_item.quantity,
+        })
     cart_items.delete()
+    email_subject = 'Order Confirmation'
+    email_body = 'Dear {},\n\nThank you for your order. Here are the details of your purchase:\n\n'.format(user1.username)
+    for item in order_details:
+        email_body += 'Book: {}\nQuantity: {}\n\n'.format(item['book_name'], item['quantity'])
+    email_body += 'Thank you for shopping with us!\n\nBest regards,\nYour Bookstore Team'
+
+    # Send email
+    send_mail(
+        email_subject,
+        email_body,
+        settings.DEFAULT_FROM_EMAIL,
+        [user1.email],
+        fail_silently=False,
+    )
+
 
     return JsonResponse({'status': 'success'}, status=200)
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def checkout_success(request):

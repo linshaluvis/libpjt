@@ -101,11 +101,13 @@ function MemberReg() {
     }
   }
   function handleUsername() {
+    console.log("ok")
     var userNameInput = document.getElementById("username");
     console.log(userNameInput)
     var userName = userNameInput.value.trim();
     if (userName !== "") {
       checkUsername(userName);
+      console.log(userName)
     }
   }
 
@@ -133,7 +135,7 @@ function MemberReg() {
     formData.append('user.last_name', lname);
     formData.append('user.username', username);
     formData.append('user.email', email);
-    formData.append('user.password', password);
+    // formData.append('user.password', password);
     formData.append('number', number);
     formData.append('mebimage', img);
     let valid = validateForm();
@@ -154,7 +156,11 @@ function MemberReg() {
       }
     } catch (err) {
       console.error('Error registering member:', err);
-      alert('Failed to register member');
+      if (err.response && err.response.data && err.response.data.error) {
+        alert(err.response.data.error);  // Display the server-side error message
+      } else {
+        alert('Failed to register member');
+      }
     }
   }
   };
@@ -208,30 +214,7 @@ function MemberReg() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-
-          />
-          <i
-                        className="fa fa-eye eye-icon"
-                        style={{ color: "#152733" }}
-                        onClick={togglePasswordVisibility}
-                      ></i>
-                      <div
-                        className="text-danger"
-                        style={{ fontSize: "0.85rem", width: "max-content" }}
-                        id="passErr"
-                      ></div>
-        </div>
+       
         <div>
           <label htmlFor="number">Contact Number:</label>
           <input

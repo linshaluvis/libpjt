@@ -46,12 +46,11 @@ class userinfoserializer(serializers.ModelSerializer):
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['first_name', 'last_name', 'username', 'email']
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
-        user.is_active = True
+        user.is_active = False
         user.save()
         return user
 

@@ -8,6 +8,26 @@ const Order = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [pendingCount, setPendingCount] = useState(0);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/get_user_status/', {
+          headers: {
+            'Authorization': `Token ${token}`
+          }
+        });
+        setPendingCount(response.data.pending_count || 0);
+      } catch (error) {
+        setError('An error occurred while fetching data');
+      }
+    };
+
+    fetchData();
+  }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -42,7 +62,7 @@ const Order = () => {
     return (
         <div>
        
-        <AdminNavbar/>
+       <AdminNavbar pendingCount={pendingCount} />
 
         <div className="container">
             <h2 className="text-center text-dark mt-4 text-uppercase">Order Details</h2>

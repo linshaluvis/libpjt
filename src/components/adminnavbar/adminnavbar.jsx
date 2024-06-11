@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faBell, faPlus, faList, faBookOpen, faUsers, faSignOutAlt, faBookReader, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
-function OffcanvasExample() {
+function OffcanvasExample({ pendingCount }) {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -54,8 +54,10 @@ function OffcanvasExample() {
                                     <Nav.Link href="/adminhome">
                                         <FontAwesomeIcon icon={faHome} /> Home
                                     </Nav.Link>
-                                    <Nav.Link href="#action2">
-                                        <FontAwesomeIcon icon={faBell} /> Notifications
+                                    <Nav.Link href="/AdminNotifications">
+                                        <FontAwesomeIcon icon={faBell} /> <span className="notification-count">{pendingCount}</span>
+                                         Pending Approvals
+
                                     </Nav.Link>
                                     <Nav.Link href="/addbook">
                                         <FontAwesomeIcon icon={faPlus} /> Add Book

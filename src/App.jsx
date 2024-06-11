@@ -22,6 +22,10 @@ import Order from './components/adminhome/Order';
 import OverDueAdmin from './components/adminhome/OverdueBooks';
 import Orderuser from './components/user/orderuser';
 import Notifications from './components/user/notificationuser';
+import AdminNotifications from './components/adminhome/notifications';
+import NavbarWrapper from './components/adminhome/NavbarWrapper';
+
+
 
 
 
@@ -53,21 +57,34 @@ function App() {
   return (
    
       <BrowserRouter>
-
       <Routes>
+
+      <Route path="/adminhome" element={<ADMINHome />} />
+      <Route path="/add_category" element={<AddCategory />} />
+      <Route path="/addbook" element={<AddBook />} />
+      <Route path="/showbook" element={<Showbook />} />
+      <Route path="/Showmember" element={<Showmember />} />
+      <Route path="/borrow_admin" element={<BorrowAdmin />} />
+      <Route path="/OverDueAdmin" element={<OverDueAdmin />} />
+      <Route path="/order" element={<Order />} />
+      <Route path="/notifications" element={<Notifications />} />
+      <Route path="/AdminNotifications" element={<AdminNotifications />} />
+      
+
+
+
+
+
+
       <Route path="" element={<Home />}></Route>
         
       <Route path="/login" element={<LoginSignup />} />
       <Route path="/signup" element={<Signup />} />
       
-      <Route path="/adminhome" element={<ADMINHome />} />
       <Route path="/userhome" element={<UserHome />} />
-      <Route path="/add_category" element={<AddCategory />} />
-      <Route path="/addbook" element={<AddBook />} />
+     
       <Route path="/memberreg" element={<MemberReg />} />
-      <Route path="/showbook" element={<Showbook />} />
       <Route path="/edit/:id" element={<EditBook />}/>
-      <Route path="/Showmember" element={<Showmember />} />
       <Route path="/Memberprofile" element={<Memberprofile />} />
       <Route path="/edit-profile" element={<EditProfile />} />
       <Route path="/cart" element={<Cart />} />
@@ -75,32 +92,8 @@ function App() {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/checkoutsuccess" element={<CheckoutSuccess />} />
       <Route path="/borrow" element={<Borrow />} />
-      <Route path="/borrow_admin" element={<BorrowAdmin />} />
-      <Route path="/order" element={<Order />} />
-      <Route path="/OverDueAdmin" element={<OverDueAdmin />} />
       <Route path="/orderuser" element={<Orderuser />} />
-      <Route path="/notifications" element={<Notifications />} />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     
 
 
         

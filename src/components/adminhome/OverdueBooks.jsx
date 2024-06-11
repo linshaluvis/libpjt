@@ -7,7 +7,27 @@ import AdminNavbar from '../adminnavbar/adminnavbar';
 const OverdueBooks = () => {
     const [overdueBooks, setOverdueBooks] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [pendingCount, setPendingCount] = useState(0);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/get_user_status/', {
+          headers: {
+            'Authorization': `Token ${token}`
+          }
+        });
+        setPendingCount(response.data.pending_count || 0);
+      } catch (error) {
+        setError('An error occurred while fetching data');
+      }
+    };
+
+    fetchData();
+  }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -42,8 +62,8 @@ const OverdueBooks = () => {
     return (
         <div>
        
-        <AdminNavbar/>
-        <div className="container">
+       <AdminNavbar pendingCount={pendingCount} />
+       <div className="container">
             <h2 className="text-center text-uppercase text-dark mt-4">Overdue Members</h2>
             <div className="table-responsive mt-4">
                 <table className="table table-striped">

@@ -199,12 +199,217 @@ def add_book(request):
     print(serializer.errors)  # or use logging
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+import random
+@parser_classes([MultiPartParser, FormParser])
+@permission_classes([IsAuthenticated])
+def approve_disapprove_user(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        print(user_id)
+        action = request.POST.get('action')
+        print(action)
+        
+        try:
+            user = CustomUser.objects.get( id=user_id)
+            print(user)
+            user_member = member.objects.get(user=user)
+            print(user_member)
+
+            if action == 'approve':
+                password = str(random.randint(100000, 999999))
+                user.set_password(password)
+                user.is_active = True
+                user.save()
+
+                subject = 'Your account has been approved'
+                message = (
+                    f'Hello {user.first_name},\n\n'
+                    f'Your account has been approved.\n'
+                    f'Username: {user.username}\n'
+                    f'Password: {password}\n\n'
+                    f'Thank you.'
+                )
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
+                return JsonResponse({'status': 'success', 'message': f'{user.username} has been approved'})
+
+            elif action == 'disapprove':
+                user_member.delete()
+                user.delete()
+
+                subject = 'Your account has been rejected'
+                message = 'Your account request has been rejected.\nThank you.'
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
+                return JsonResponse({'status': 'success', 'message': f'{user.username} has been disapproved'})
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': 'An error occurred while processing your request.'}, status=500)
+
+    else:
+        pending_members = member.objects.filter(user__is_active=False)
+        approved_members = member.objects.filter(user__is_active=True)
+        
+        # Placeholder for overdue books logic
+
+        pending_members_data = [
+            {
+                'id': mem.id,
+                'username': mem.user.username,
+                'first_name': mem.user.first_name,
+                'last_name': mem.user.last_name,
+                'email': mem.user.email
+            }
+            for mem in pending_members
+        ]
+        
+        approved_members_data = [
+            {
+                'id': mem.id,
+                'username': mem.user.username,
+                'first_name': mem.user.first_name,
+                'last_name': mem.user.last_name,
+                'email': mem.user.email
+            }
+            for mem in approved_members
+        ]
+
+        return JsonResponse({
+            'pending_members': pending_members_data,
+            'pending_count': len(pending_members_data),
+            'approved_members': approved_members_data,
+        })
+        
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def approve_disapprove_mail(request, user_id):
+    try:
+        action = request.data.get('action')  # Using request.data to handle JSON request body
+        print(action)
+        print(user_id)
+        user = CustomUser.objects.get(id=user_id)
+        user_member = member.objects.get(user=user)
+        # user_member = member.objects.get(id=user_id)
+        # user=user_member.user
+
+        
+        print(user)
+        print(user_member)
+
+        if action == 'approve':
+            # Generate a random password for the user
+            password = str(random.randint(100000, 999999))
+            user.set_password(password)
+            user.is_active = True
+            user.save()
+
+            # Send approval email
+            subject = 'Your account has been approved'
+            message = (
+                f'Hello {user.first_name},\n\n'
+                f'Your account has been approved.\n'
+                f'Username: {user.username}\n'
+                f'Password: {password}\n\n'
+                f'Thank you.'
+            )
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
+
+            return JsonResponse({'status': 'success', 'message': f'{user.username} has been approved'})
+
+        elif action == 'disapprove':
+            # Delete the user and related member
+            user_member.delete()
+            user.delete()
+
+            # Send disapproval email
+            subject = 'Your account has been rejected'
+            message = 'Your account request has been rejected.\nThank you.'
+            send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
+
+            return JsonResponse({'status': 'success', 'message': f'{user.username} has been disapproved'})
+
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid action.'}, status=400)
+
+    except CustomUser.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'User not found.'}, status=404)
+    except member.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Member not found.'}, status=404)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': 'An error occurred while processing your request.'}, status=500)
+
+   
+
+# @api_view(['POST'])
+# @parser_classes([MultiPartParser, FormParser])
+# def memberreg(request):
+#     serializer = MemberSerializer(data=request.data)
+#     print(request.data)
+#     if serializer.is_valid():
+#         member_instance = serializer.save()
+#         # Create token for the user
+#         token, created = Token.objects.get_or_create(user=member_instance.user)
+#         response_data = serializer.data
+#         response_data['token'] = token.key  # Include the token in the response
+#         return Response(response_data, status=status.HTTP_201_CREATED)
+#     else:
+#         print(serializer.errors)  # Print validation errors to console for debugging
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# views.py
+
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
 def memberreg(request):
-    serializer = MemberSerializer(data=request.data)
-    print(request.data)
+    data = request.data
+
+    user_data = {
+        'first_name': data.get('user.first_name'),
+        'last_name': data.get('user.last_name'),
+        'username': data.get('user.username'),
+        'email': data.get('user.email'),
+    }
+    print(user_data)
+
+    number = data.get('number')
+    img = data.get('mebimage')
+    print(img)
+
+    # Validate contact number
+    if len(number) != 10 or not number.isdigit():
+        return Response({'error': 'Contact number must be 10 digits.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Validate email
+    try:
+        validate_email(user_data['email'])
+        if '.com' not in user_data['email']:
+            raise ValidationError("Email must contain .com")
+    except ValidationError:
+        return Response({'error': 'Invalid email address. Email must contain .com'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Check if email already exists
+    if CustomUser.objects.filter(email=user_data['email']).exists():
+        print("email checked")
+        return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Check if username already exists
+    if CustomUser.objects.filter(username=user_data['username']).exists():
+        print("username")
+        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Check if phone number already exists
+    if member.objects.filter(number=number).exists():
+        return Response({'error': 'Phone number already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Create user and member instances
+    serializer = MemberSerializer(data={
+        'user': user_data,
+        'number': number,
+        'mebimage': img,
+    })
+
     if serializer.is_valid():
         member_instance = serializer.save()
         # Create token for the user
@@ -213,7 +418,6 @@ def memberreg(request):
         response_data['token'] = token.key  # Include the token in the response
         return Response(response_data, status=status.HTTP_201_CREATED)
     else:
-        print(serializer.errors)  # Print validation errors to console for debugging
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -674,3 +878,53 @@ def userorder(request):
     ]
     print(order_data)
     return JsonResponse(order_data, safe=False)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_status(request):
+    pending_users = CustomUser.objects.filter(is_active=False)
+    approved_users = CustomUser.objects.filter(is_active=True)
+    pending_count = pending_users.count()
+    
+    pending_users_data = [
+        {
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email
+        } for user in pending_users
+    ]
+    
+    approved_users_data = [
+        {
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email
+        } for user in approved_users
+    ]
+    
+    return JsonResponse({
+        'pending_users': pending_users_data,
+        'pending_count': pending_count,
+        'approved_users': approved_users_data
+    })
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])     
+def pay_fine(request, pk):
+    borrower = get_object_or_404(Borrower, id=pk)
+
+    try:
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        credit_card_number = request.POST.get('credit_card_number')
+
+        # Assume you have some logic to process the payment here
+
+        borrower.paid = True
+        borrower.save(update_fields=['paid'])
+        return JsonResponse({'message': 'Fine paid successfully'}, status=200)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)

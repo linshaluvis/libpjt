@@ -45,11 +45,19 @@ urlpatterns = [
     path('borrow_details/', views.borrow_details, name='borrow_details'),
     path('return_book/<int:pk>/', views.return_book, name='return_book'),
     path('mark_book_missing/<int:pk>/', views.mark_book_missing, name='mark_book_missing'),
+    path('pay_fine/<int:pk>/', views.pay_fine, name='pay_fine'),
+
     path('borrow_admin/', views.borrow_admin, name='borrow_admin'),
     path('order_data/', views.order_data, name='order_data'),
     path('overdue_books/', views.overdue_books_view, name='overdue_books'),
     path('overdue_booksUser/', views.overdue_booksUser, name='overdue_booksUser'),
     path('userorder/', views.userorder, name='userorder'),
+    path('approve_disapprove_user/', views.approve_disapprove_user, name='approve_disapprove_user'),
+    path('approve_disapprove_mail/<int:user_id>/', views.approve_disapprove_mail, name='approve_disapprove_mail'),
+    path('get_user_status/', views.get_user_status, name='get_user_status'),
+
+
+
 
     
 

@@ -146,6 +146,36 @@
   align-items: center;
   gap: 10px;
 }
+/* AdminNavbar.css */
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.1rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+.notification-count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+}
+
+.icon {
+  margin-right: 10px;
+}
 
 /* Responsive styling */
 @media (max-width: 767.98px) {

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './add_category.css';
 import AdminNavbar from '../adminnavbar/adminnavbar'; 
+import Footer from '../Footer/Footer';
+
 
 
 function AddCategory() {
@@ -64,7 +66,7 @@ function AddCategory() {
        <AdminNavbar pendingCount={pendingCount} />
   
     <div className="add-category-container">
-      <h2 className='text-uppercase'>Add New Category</h2>
+      <h1 className='text-uppercase'>Add New Category</h1>
       <form onSubmit={handleCategorySubmit}>
         <div>
           <label htmlFor="categoryName">Category Name:</label>
@@ -79,7 +81,8 @@ function AddCategory() {
       </form>
     </div>
 
-
+    <br></br>
+    <Footer/>
 </div>
   );
 }

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './signup.css'; // Import the CSS file for styling
 import Loginnavbar from '../loginnavbar/loginnavbar'; 
 import Swal from "sweetalert2";
+import Footer from '../Footer/Footer';
+
 
 
 
@@ -239,6 +241,8 @@ function MemberReg() {
         <button type="submit">Register</button>
       </form>
     </div>
+    <br></br>
+    <Footer/>
     </div>
   );
 }

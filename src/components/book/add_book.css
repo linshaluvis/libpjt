@@ -1,6 +1,6 @@
 /* Container styling */
 .add-book-container {
-  background-color: #f8f9fa; /* Light gray background */
+  background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
   padding: 2rem;
   border-radius: 8px;
   max-width: 600px;
@@ -71,4 +71,8 @@
 
 .add-book-container button:hover {
   background-color: #4c0758; /* Darker info color on hover */
+}
+body {
+  margin: 0;
+  padding-bottom: 600px; /* Adjust this value based on footer height */
 }

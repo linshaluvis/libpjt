@@ -10,12 +10,12 @@ const Hero = () => {
     navigate('/login');
   };
   return (
-    <div className='hero container'>
+    <div className='hero-container'>
       <div className="hero-text">
       <h1>The Library Management System</h1>
   <p>Designed to efficiently handle the borrowing, returning, and cataloging of books, ensuring a seamless experience for both librarians and patrons.</p>
   
-        <button className='btn' onClick={handleExploreMoreClick}>Explore more <img src={dark_arrow} alt="" /></button>
+        <button className='herobtn btn' onClick={handleExploreMoreClick}>Explore more <img src={dark_arrow} alt="" /></button>
       </div>
     </div>
     

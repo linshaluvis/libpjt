@@ -1,50 +1,51 @@
-.footer{
-    margin: 10px auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #797979;
-    padding: 15px 0;
+/* General styling for the footer */
+.footer {
+    width: 100%;
+    background: linear-gradient(45deg, #cc09cc 0%, #cccad7 100%);
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    bottom: 0;
+    left: 0;
 }
-.footer img{
-    width: 35px;
-    margin-left: 10px;
+
+.footer h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #070436;
 
 }
-.footer-col{
-    flex-basis: 48%;
-    color: #272020;
-}
-.footer-col h3{
-    color: #000F38;
-    font-weight: 500;
-    font-size: 25px;
+
+.footer-col {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    justify-content: center;
+    margin-top: 10px;
+    color: #02010f;
+
 }
-.footer ul li{
+
+.footer-col ul {
     list-style: none;
-    display: inline-block;
-    margin-left: 20px;
+    padding: 0;
+}
+
+.footer-col li {
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin-bottom: 10px;
+    color: #02010f;
+
 }
-.footer ul li img{
-    width: 25px;
-    margin-left: 10px;
+
+.footer-col li img {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
 }
-/* ------ media query ---------- */
-@media (max-width: 600px){
-    .footer{
-        display: block;
-        text-align: center;
-    }
-    .footer ul li{
-        margin: 10px;
-    }
-    .footer ul{
-        margin-top: 10px;
-    }
+
+/* Ensure footer doesn't overlap content */
+body {
+    margin: 0;
+    padding-bottom: 600px; /* Adjust this value based on footer height */
 }

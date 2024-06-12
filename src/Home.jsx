@@ -21,10 +21,10 @@ function Home() {
       <div>
        <Navbar/>
        <Hero/>
-       <div className="container">
+       <div className="container-home">
          
           <About />
-          <Title subTitle='Gallery' title='Campus Photos'/>
+          <Title subTitle='Gallery' title=' BOOKSHARE LIBRARY'/>
           <Campus/>
          
        

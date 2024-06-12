@@ -24,6 +24,10 @@ import Orderuser from './components/user/orderuser';
 import Notifications from './components/user/notificationuser';
 import AdminNotifications from './components/adminhome/notifications';
 import NavbarWrapper from './components/adminhome/NavbarWrapper';
+import Changepassword from './components/user/changepassword';
+
+
+
 
 
 
@@ -93,6 +97,8 @@ function App() {
       <Route path="/checkoutsuccess" element={<CheckoutSuccess />} />
       <Route path="/borrow" element={<Borrow />} />
       <Route path="/orderuser" element={<Orderuser />} />
+      <Route path="/Changepassword" element={<Changepassword />} />
+
      
 
 

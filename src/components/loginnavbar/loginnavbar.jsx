@@ -8,7 +8,7 @@ import { faHome, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-ico
 function CollapsibleExample() {
   return (
     <Navbar collapseOnSelect expand="lg" className="nav-con bg-gradient-custom">
-      <Container className="me-container">
+      <Container className="me-container ">
         <Navbar.Brand href="#home" className="brand-text"><strong>BOOKSHARE</strong></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">

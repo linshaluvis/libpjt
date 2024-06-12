@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminNavbar from '../adminnavbar/adminnavbar';
 import './ApproveDisapproveUser.css'; // Import CSS file
+import Footer from '../Footer/Footer';
+
 
 function ApproveDisapproveUser() {
   const [pendingMembers, setPendingMembers] = useState([]);
@@ -76,16 +78,16 @@ function ApproveDisapproveUser() {
   return (
     <div>
       <AdminNavbar pendingCount={pendingCount} />  {/* Pass pendingCount to AdminNavbar */}
-      <div className="container">
-        <h1 className="title">Approve/Disapprove Users</h1>
+      <div className="container-not">
+        <h1 className="title text-uppercase">Approve/Disapprove Users</h1>
         <section className="section">
-          <h2 className="section-title">Pending Members ({pendingCount})</h2>
+          <h3 className="section-title">Pending Members ({pendingCount})</h3>
           {pendingMembers.length > 0 ? (
             pendingMembers.map(member => (
               <div key={member.id} className="member-card">
                 <p>{member.username} {member.last_name}</p>
                 <button className="approve-button w-25" onClick={() => handleApprove(member.id)}>Approve</button>
-                <button className="disapprove-button w-25" onClick={() => handleDisapprove(member.id)}>Disapprove{member.id}</button>
+                <button className="disapprove-button w-25" onClick={() => handleDisapprove(member.id)}>Disapprove</button>
               </div>
             ))
           ) : (
@@ -93,7 +95,7 @@ function ApproveDisapproveUser() {
           )}
         </section>
 
-        <section className="section">
+        {/* <section className="section">
           <h2 className="section-title">Approved Members</h2>
           {approvedMembers.length > 0 ? (
             approvedMembers.map(member => (
@@ -104,8 +106,10 @@ function ApproveDisapproveUser() {
           ) : (
             <p>No approved members.</p>
           )}
-        </section>
+        </section> */}
       </div>
+      <br></br>
+      <Footer/>
     </div>
   );
 }

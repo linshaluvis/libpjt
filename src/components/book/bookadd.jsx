@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './add_book.css'; 
 import AdminNavbar from '../adminnavbar/adminnavbar';
+import Footer from '../Footer/Footer';
 
 function AddBook() {
   const [bookName, setBookName] = useState('');
@@ -161,6 +162,8 @@ function AddBook() {
           <button type="submit">Add Book</button>
         </form>
       </div>
+      <br></br>
+      <Footer/>
     </div>
   );
 }

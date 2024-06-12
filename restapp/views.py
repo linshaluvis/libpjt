@@ -915,6 +915,7 @@ def get_user_status(request):
 @permission_classes([IsAuthenticated])     
 def pay_fine(request, pk):
     borrower = get_object_or_404(Borrower, id=pk)
+    print(borrower)
 
     try:
         name = request.POST.get('name')
@@ -924,7 +925,45 @@ def pay_fine(request, pk):
         # Assume you have some logic to process the payment here
 
         borrower.paid = True
-        borrower.save(update_fields=['paid'])
+        borrower.fine='0'
+        print("ok")
+        borrower.save()
         return JsonResponse({'message': 'Fine paid successfully'}, status=200)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+import re
+import string 
+@permission_classes([IsAuthenticated])        
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&()_+{}\[\]:;<>,.?~\\-]).+$')
+
+        user = request.user
+
+        if not user.check_password(current_password):
+            return JsonResponse({'status': 'error', 'message': 'Incorrect current password.'}, status=400)
+        
+        if new_password != confirm_password:
+            return JsonResponse({'status': 'error', 'message': 'New password and confirmation do not match.'}, status=400)
+        
+        if len(new_password) < 6:
+            return JsonResponse({'status': 'error', 'message': 'Password is too short.'}, status=400)
+        
+        if not any(char.isdigit() for char in new_password):
+            return JsonResponse({'status': 'error', 'message': 'Password must contain at least one digit.'}, status=400)
+        
+        if not any(char.isalpha() for char in new_password):
+            return JsonResponse({'status': 'error', 'message': 'Password must contain at least one letter.'}, status=400)
+        
+        if not any(char in string.punctuation for char in new_password):
+            return JsonResponse({'status': 'error', 'message': 'Password must contain at least one special character.'}, status=400)
+        
+        user.set_password(new_password)
+        user.save()
+        
+        return JsonResponse({'status': 'success', 'message': 'Password changed successfully.'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)

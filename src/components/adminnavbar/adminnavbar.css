@@ -89,6 +89,7 @@
 .bg-gradient-custom {
   background: linear-gradient(135deg, #f06, #4a90e2);
   border-bottom: 2px solid #fff;
+  
 }
 
 /* Navbar container styling */

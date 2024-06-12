@@ -1,8 +1,4 @@
-/* Container styling */
-body {
-    background-color: #f8f9fa; /* Light gray background */
-    font-family: Arial, sans-serif;
-  }
+
   
   /* Table styling */
   table {
@@ -17,7 +13,7 @@ body {
   
   /* Table header styling */
   table thead {
-    background-color: #343a40; /* Dark background for the header */
+    background-color: #a57dcb; /* Dark background for the header */
     color: #ffffff; /* White text for the header */
   }
   
@@ -58,3 +54,40 @@ body {
     color: #343a40; /* Dark gray text color */
   }
   
+td img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  th, td {
+      padding: 8px;
+      font-size: 14px;
+  }
+
+  td img {
+      width: 40px;
+      height: 40px;
+  }
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Add some spacing for the title */
+h1 {
+  margin: 20px 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}

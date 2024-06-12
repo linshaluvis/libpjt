@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminNavbar from '../adminnavbar/adminnavbar'; 
+import Footer from '../Footer/Footer';
+import './adminhome.css'; 
+
+
 
 
 const OverdueBooks = () => {
@@ -63,8 +67,11 @@ const OverdueBooks = () => {
         <div>
        
        <AdminNavbar pendingCount={pendingCount} />
-       <div className="container">
-            <h2 className="text-center text-uppercase text-dark mt-4">Overdue Members</h2>
+       <br></br>
+       <br></br>
+
+       <div className="container-overdue">
+            <h1 className="text-center text-uppercase text-dark mt-4">Overdue Members</h1>
             <div className="table-responsive mt-4">
                 <table className="table table-striped">
                     <thead>
@@ -88,6 +95,9 @@ const OverdueBooks = () => {
                 </table>
             </div>
         </div>
+        <br></br>
+        <br></br>
+        <Footer/>
         </div>
     );
 };

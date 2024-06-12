@@ -1,24 +1,29 @@
 /* Container styling */
 .add-category-container {
-  background-color: #f8f9fa; /* Light gray background */
-  padding: 2rem;
+  background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+  padding: 10px;
   border-radius: 8px;
   max-width: 500px;
   margin: 3rem auto; /* Center the container */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  height: 400px;
 }
 
 /* Heading styling */
-.add-category-container h2 {
+.add-category-container h1 {
   text-align: center;
   margin-bottom: 1.5rem;
   color: #343a40; /* Dark gray text color */
+  padding: 10px;
+
 }
 
 /* Form styling */
 .add-category-container form {
   display: flex;
   flex-direction: column;
+  padding: 10px;
+
 }
 
 /* Label styling */
@@ -26,11 +31,13 @@
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #495057; /* Medium gray text color */
+  padding: 10px;
+
 }
 
 /* Input styling */
 .add-category-container input[type="text"] {
-  padding: 0.75rem;
+  padding: 10px;
   border: 1px solid #ced4da; /* Light gray border */
   border-radius: 4px;
   font-size: 1rem;

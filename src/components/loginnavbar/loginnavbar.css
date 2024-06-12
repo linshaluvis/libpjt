@@ -5,10 +5,14 @@
 
 /* Custom styles for the container */
 .me-container {
-  max-width: 1200px;
+  width: 100%;
   padding: 0 20px;
 }
+.Container{
+  width: 100%;
 
+
+}
 /* Brand text styling */
 .brand-text {
   font-family: 'Roboto', sans-serif;

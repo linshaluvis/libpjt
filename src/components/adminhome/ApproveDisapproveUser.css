@@ -1,8 +1,9 @@
-.container {
+.container-not {
     margin: 20px;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
   }
   
   .title {
@@ -43,11 +44,11 @@
   }
   
   .approve-button:hover {
-    background-color: #218838;
+    background-color: #023e0f;
   }
   
   .disapprove-button {
-    background-color: #dc3545;
+    background-color: #d71c2f;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -56,7 +57,7 @@
   }
   
   .disapprove-button:hover {
-    background-color: #c82333;
+    background-color: #65020c;
   }
   
   .error-message {

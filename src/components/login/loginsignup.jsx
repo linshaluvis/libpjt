@@ -1,24 +1,27 @@
 import './loginsignup.css';
-import user_icon from '../Assets/email.png';
-import email_icon from '../Assets/person.png';
+import user_icon from '../Assets/person.png'; // Corrected icon for user
+import email_icon from '../Assets/email.png'; // You might need this for signup
 import password_icon from '../Assets/password.png';
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loginnavbar from '../loginnavbar/loginnavbar';
+import Footer from '../Footer/Footer';
+
+
 
 function LoginSignup() {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const passref = useRef(null);
+
     function togglePasswordVisibility() {
         if (passref.current.type === "text") {
             passref.current.type = "password";
         } else {
             passref.current.type = "text";
         }
-      }
-    
+    }
 
     const handleCreateAccount = () => {
         navigate('/signup');
@@ -38,7 +41,6 @@ function LoginSignup() {
             .then((res) => {
                 const { token, role } = res.data;
                 localStorage.setItem('token', token); // Store the token in localStorage
-                console.log(res.data)
                 if (role === 'admin') {
                     navigate('/adminhome'); // Redirect to admin panel
                 } else {
@@ -55,19 +57,21 @@ function LoginSignup() {
     };
 
     return (
-        <div className="Home">
-            <Loginnavbar />
-            <br />
-            <div className="Container">
+        <div>
+                        <Loginnavbar />
+
+        
+        <div className="Homee">
+            <div className="Container-login">
                 <div className="Header">
-                    <div className="text text-danger text-center">
+                    <div className="text text-center">
                         <h1>LOGIN</h1>
                     </div>
-                    <div className="underline text-danger text-center"></div>
+                    <div className="underline"></div>
                 </div>
                 <div className="inputs">
                     <div className="input">
-                        <img src={user_icon} alt="" />
+                        <img src={user_icon} alt="User Icon" />
                         <input
                             type="text"
                             onChange={(e) => setUsername(e.target.value)}
@@ -75,39 +79,42 @@ function LoginSignup() {
                         />
                     </div>
                     <div className="input">
-                        <img src={password_icon} alt="" />
+                        <img src={password_icon} alt="Password Icon" />
                         <input
                             type="password"
                             ref={passref}
                             placeholder="Password"
                         />
-                         <i
-                        className="fa fa-eye eye-icon"
-                        style={{ color: "#152733" }}
-                        onClick={togglePasswordVisibility}
-                      ></i>
+                        <i
+                            className="fa fa-eye eye-icon"
+                            onClick={togglePasswordVisibility}
+                        ></i>
                     </div>
                 </div>
-                <p className="small mb-3 pb-lg-2 text-center">
-                      <Link to={"/forgot_password"} className="text-dark-50">
+                <p className="small text-center forgot">
+                    <Link to={"/forgot_password"}>
                         Forgot password?
-                      </Link>
-                    </p>
+                    </Link>
+                </p>
                 <div className="submit-container">
                     <div className="submit">
-                        <button className="submit" onClick={handleSubmit}>
+                        <button onClick={handleSubmit}>
                             LOGIN
                         </button>
                     </div>
                 </div>
                 <button
                     onClick={handleCreateAccount}
-                    className="btn border w-100 bg-primary rounded-0"
+                    className="btn"
                 >
                     Create Account
                 </button>
             </div>
         </div>
+        <br></br>
+        <Footer/>
+        </div>
+        
     );
 }
 

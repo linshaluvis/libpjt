@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './EditBook.css'; // Ensure to import the CSS file
-
+import Footer from '../Footer/Footer';
 import AdminNavbar from '../adminnavbar/adminnavbar'; 
 
 
@@ -130,6 +130,8 @@ const EditBook = () => {
                 <button type="submit">Update Book</button>
             </form>
         </div>
+        <br></br>
+        <Footer/>
         </div>
     );
 };

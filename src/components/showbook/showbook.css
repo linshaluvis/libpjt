@@ -5,6 +5,8 @@
     padding: 2px;
     font-family: Arial, sans-serif;
     text-align: center; /* Center the text in the container */
+    background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+
 }
 
 h1 {
@@ -26,6 +28,7 @@ h1 {
     flex-direction: column; /* Set flex direction to column */
     align-items: center; /* Center items horizontally */
     max-width: 600px; /* Constrain the width of list items */
+    height: 600px;
     
 }
 
@@ -64,7 +67,7 @@ h1 {
 
 .book-author, .book-category {
     font-size: 0.9em;
-    color: #777;
+    color: #ea0c31;
 }
 
 .book-category {
@@ -76,11 +79,12 @@ h1 {
   padding: 20px;
   max-width: 1200px;
   margin: auto;
+
 }
 
 /* Styling for each book item */
 .book-item {
-  background: #fff;
+  background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -90,6 +94,8 @@ h1 {
 .book-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #d9d1d9 0%, #474369 100%);
+
 }
 
 /* Styling for the book image */
@@ -153,7 +159,7 @@ h1 {
 
 /* Specific styling for the Edit button */
 .edit-button {
-  background-color: #28a745; /* Green background */
+  background-color: #7230ce; /* Green background */
   color: white; /* White text */
   border: 2px solid transparent; /* Border for focus */
   margin-bottom: 10px;
@@ -161,7 +167,7 @@ h1 {
 }
 
 .edit-button:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #120883; /* Darker green on hover */
   color: white; /* Maintain white text on hover */
   transform: translateY(-2px); /* Lift effect on hover */
 }
@@ -193,7 +199,6 @@ h1 {
 
 /* Styling for each book item */
 .book-item {
-  background: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;

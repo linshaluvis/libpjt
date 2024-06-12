@@ -1,12 +1,12 @@
 /* memberreg.css */
 
 .member-reg-container {
-    width: 50%;
+    width: 37%;
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
   }
   
   .member-reg-container h2 {
@@ -42,7 +42,7 @@
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #6a11cb 0%, #fc25bb 100%);
     color: #fff;
     cursor: pointer;
   }

@@ -4,6 +4,8 @@ import './showbook.css';
 import AdminNavbar from '../adminnavbar/adminnavbar'; 
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import Footer from '../Footer/Footer';
+
 
 const Showbook = () => {
     const [categories, setCategories] = useState([]);
@@ -79,11 +81,11 @@ const Showbook = () => {
                                 </div>
                                 <div className="book-details">
                                     <div className="book-title">{book.book}</div>
-                                    <div className="book-author">by {book.author}</div>
+                                    <div className="book-author  text-danger">by {book.author}</div>
                                     <div className="book-price">₹ {book.price}</div>
-                                    <div className="book-author">Stock: {book.stock}</div>
-                                    <div className="book-category">Category: {book.category.category_name}</div>
-                                    <div className="button-container">
+                                    <div className="book-author text-dark">Stock: {book.stock}</div>
+                                    <div className="book-category  text-dark">Category: {book.category.category_name}</div>
+                                    <div className="button-containe">
                                         <Link to={`/edit/${book.id}`} className="edit-button">Edit</Link>
                                         <button onClick={() => handleDelete(book.id, book.book)} className="delete-button">Delete</button>
                                     </div>
@@ -93,6 +95,8 @@ const Showbook = () => {
                     ))}
                 </Grid>
             </div>
+            <br></br>
+      <Footer/>
         </div>
     );
 }

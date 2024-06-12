@@ -4,7 +4,7 @@ import about_img from '../Assets/LIB.jpg'
 import play_icon from '../Assets/play-icon.png'
 function About() {
   return (
-    <div className='about'>
+    <div className='about-container'>
       <div className="about-left">
         <img src={about_img} alt="" className='about-img'/>
       </div>

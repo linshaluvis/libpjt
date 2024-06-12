@@ -64,6 +64,9 @@ function OffcanvasExample() {
                                     <Nav.Link href="/Memberprofile">
                                         <FontAwesomeIcon icon={faUser} /> Profile
                                     </Nav.Link>
+                                    <Nav.Link href="/Changepassword">
+                                        <FontAwesomeIcon icon={faUser} /> Change Password
+                                    </Nav.Link>
                                     <NavDropdown
                                         title={<><FontAwesomeIcon icon={faBook} /> Book Details</>}
                                         id={`offcanvasNavbarDropdown-expand-${expand}`}

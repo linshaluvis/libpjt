@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminNavbar from '../adminnavbar/adminnavbar'; 
+import Footer from '../Footer/Footer';
+
 
 
 const Order = () => {
@@ -91,6 +93,8 @@ const Order = () => {
                 </table>
             </div>
         </div>
+        <br></br>
+        <Footer/>
         </div>
     );
 };

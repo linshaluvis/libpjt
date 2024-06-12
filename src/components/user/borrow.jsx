@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import UserNavbar from '../usernavbar/usernavbar';
+import { Modal, Button as BootstrapButton, Form } from 'react-bootstrap';
 
 const Container = styled.div`
     padding: 20px;
@@ -45,7 +46,7 @@ const TableData = styled.td`
 const Button = styled.button`
     margin-right: 10px;
     padding: 8px 16px;
-    width:100px;
+    width: 100px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -77,6 +78,8 @@ const Borrow = () => {
     const [borrows, setBorrows] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedBorrowId, setSelectedBorrowId] = useState(null);
 
     const fetchData = async () => {
         const token = localStorage.getItem('token');
@@ -136,6 +139,47 @@ const Borrow = () => {
         }
     };
 
+    const handleShowModal = (borrowId) => {
+        setSelectedBorrowId(borrowId);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedBorrowId(null);
+    };
+
+    const handlePayFine = async (event) => {
+        event.preventDefault();
+        const token = localStorage.getItem('token');
+        const { firstName, lastName, city, state, country, creditCardNumber, cvv } = event.target.elements;
+
+        try {
+            await axios.post(`http://localhost:8000/pay_fine/${selectedBorrowId}/`, {
+                
+                firstName: firstName.value,
+                lastName: lastName.value,
+                city: city.value,
+                state: state.value,
+                country: country.value,
+                creditCardNumber: creditCardNumber.value,
+                cvv: cvv.value
+            }, {
+                headers: {
+                    'Authorization': `Token ${token}`
+                }
+            });
+            console.log("successful")
+            alert("payment successful")
+
+            // Close the modal and re-fetch borrow details
+            handleCloseModal();
+            fetchData();
+        } catch (error) {
+            console.error('Error paying fine:', error);
+        }
+    };
+
     if (loading) {
         return <Container>Loading...</Container>;
     }
@@ -184,6 +228,12 @@ const Borrow = () => {
                                                 </SuccessButton>
                                             </>
                                         )}
+                                        {borrow.fine > 0 && !borrow.paid && (
+                                            <Button onClick={() => handleShowModal(borrow.id)}>
+                                                Pay Fine
+                                            </Button>
+                                        )}
+                                        
                                     </TableData>
                                 </tr>
                             ))}
@@ -191,6 +241,51 @@ const Borrow = () => {
                     </Table>
                 </TableContainer>
             </Container>
+            <Modal show={showModal} onHide={handleCloseModal}>
+                <Form onSubmit={handlePayFine}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Pay Fine</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form.Group controlId="firstName">
+                            <Form.Label>First Name</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                        <Form.Group controlId="lastName">
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                        <Form.Group controlId="city">
+                            <Form.Label>City</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                        <Form.Group controlId="state">
+                            <Form.Label>State</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                        <Form.Group controlId="country">
+                            <Form.Label>Country</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                        <Form.Group controlId="creditCardNumber">
+                            <Form.Label>Credit Card Number</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                        <Form.Group controlId="cvv">
+                            <Form.Label>CVV</Form.Label>
+                            <Form.Control type="text" required />
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <BootstrapButton variant="secondary" onClick={handleCloseModal}>
+                            Cancel
+                        </BootstrapButton>
+                        <BootstrapButton type="submit" variant="primary">
+                            Pay Fine
+                        </BootstrapButton>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
         </div>
     );
 };

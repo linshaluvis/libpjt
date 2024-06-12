@@ -6,6 +6,8 @@ import AdminNavbar from '../adminnavbar/adminnavbar';
 import gallery_1 from '../Assets/gallery-1.png';
 import gallery_2 from '../Assets/LO2.png';
 import gallery_3 from '../Assets/LO4.png';
+import Footer from '../Footer/Footer';
+
 
 function ADMINHome() {
   const [pendingCount, setPendingCount] = useState(0);
@@ -42,7 +44,7 @@ function ADMINHome() {
         <div className="row">
           <div className="col-md-6 col-lg-3 mb-3 mt-5">
             <div className="card h-100">
-              <Link to="/memberdetails">
+              <Link to="/Showmember">
                 <img className="card-img-top uniform-img" src={gallery_1} alt="Card image" />
               </Link>
               <div className="card-body">
@@ -72,6 +74,8 @@ function ADMINHome() {
           </div>
         </div>
       </div>
+      <br></br>
+      <Footer/>
     </div>
   );
 }

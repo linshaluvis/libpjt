@@ -1,105 +1,111 @@
-.Home {
+body{
+    background: linear-gradient(45deg, #dbc1db 0%, #d3d2dd 100%);
+
+
+}
+.Homee {
+
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
 }
 
-.Container {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
+.Container-login {
+    background: #fff;
+    padding: 40px;
     border-radius: 10px;
-    background-color: #fff;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    padding-top: 10px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+
+
 }
 
-.Header .text {
-    font-size: 24px;
-    font-weight: bold;
+.Header .text h1 {
+    font-size: 2.5em;
+    color: #560642;
+    margin-bottom: 0.5em;
+    padding-top: 20px;
 }
 
 .underline {
-    width: 100px;
-    height: 2px;
-    background-color: red;
-    margin: 10px auto;
+    width: 50px;
+    height: 5px;
+    background-color: #380333;
+    margin: 0 auto;
+margin-bottom: 10px;
 }
 
-.inputs {
-    margin-top: 20px;
-}
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
-.Login {
-  text-align: center;
-}
-
-*, body {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-html, body {
-    height: 100%;
-}
-.eye-icon {
-  position: absolute;
-  right: 10px;
-  top: 30%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
-.input {
+.inputs .input {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.input img {
-    width: 20px;
-    height: 20px;
+.inputs .input img {
+    width: 25px;
     margin-right: 10px;
 }
 
-.input input {
-    flex: 1;
+.inputs .input input {
+    width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+}
+
+.inputs .input input:focus {
+    border-color: #ed2308;
+    outline: none;
+}
+.forgot{
+    color: #000;
+}
+.eye-icon {
+    position: absolute;
+    margin-left: -30px;
+    cursor: pointer;
 }
 
 .submit-container {
     margin-top: 20px;
 }
 
-.submit button {
+.submit-container .submit {
+    width: 100%;
+}
+
+.submit-container .submit button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
     border: none;
     border-radius: 5px;
-    color: #fff;
-    font-size: 16px;
+    background: linear-gradient(45deg, #6a11cb 0%, #fc25bb 100%);
+    color: white;
+    font-size: 1.2em;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.submit button:hover {
-    background-color: #0056b3;
+.submit-container .submit button:hover {
+    background-color: #feb47b;
 }
 
-.btn {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
+.small a {
+    color: #660202;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+.small a:hover {
+    color: #160a01;
 }
+

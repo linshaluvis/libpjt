@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     
     <div className='footer'>
-      <p>Library Management System </p>
+      <h2 className='text-footer'>Library Management System </h2>
       
       <div className="footer-col">
         

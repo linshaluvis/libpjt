@@ -3,6 +3,7 @@ import axios from 'axios';
 import './checkout.css';
 import UserNavbar from '../usernavbar/usernavbar';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Footer/Footer';
 
 
 const Checkout = () => {
@@ -91,7 +92,7 @@ const Checkout = () => {
   return (
     <div>
       <UserNavbar />
-      <div className="checkout">
+      <div className="checkout text-uppercase">
         <h1>Checkout</h1>
         
         <div className="order-summary">
@@ -178,6 +179,8 @@ const Checkout = () => {
           </div>
         )}
       </div>
+      <br></br>
+        <Footer/>
     </div>
   );
 };

@@ -1,11 +1,12 @@
 .profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+  background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 3rem auto; /* Center the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+  
   
   .header {
     text-align: center;
@@ -30,7 +31,7 @@
   
   .info-text {
     font-size: 16px;
-    color: #555;
+    color: #2a023c;
   }
   
   .loading-container {

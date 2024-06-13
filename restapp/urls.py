@@ -33,8 +33,8 @@ urlpatterns = [
     path('profileapi/', views.profile_api, name='profileapi'),
     path('profile/', views.profile_view, name='profile-edit'),
      path('api/cart-items/', views.cart_items, name='cart_items'),
-    path('api/cart/increase/<int:book_id>/', views.increase_quantity, name='increase_quantity'),
-    path('api/cart/decrease/<int:book_id>/', views.decrease_quantity, name='decrease_quantity'),
+    path('cart/increase/<int:book_id>/', views.increase_quantity, name='increase_quantity'),
+    path('cart/decrease/<int:book_id>/', views.decrease_quantity, name='decrease_quantity'),
     path('api/cart/remove/<int:item_id>/', views.remove_item, name='remove_item'),
      path('check_phone_number/', views.checkPhoneNumber, name='check_phone_number'),
     path('check_username/', views.checkUserName, name='check_username'),
@@ -55,6 +55,10 @@ urlpatterns = [
     path('approve_disapprove_user/', views.approve_disapprove_user, name='approve_disapprove_user'),
     path('approve_disapprove_mail/<int:user_id>/', views.approve_disapprove_mail, name='approve_disapprove_mail'),
     path('get_user_status/', views.get_user_status, name='get_user_status'),
+    path('change_password/', views.change_password, name='change_password'),
+    path('check-email-exists/', views.check_email_exists, name='check-email-exists'),
+
+
 
 
 

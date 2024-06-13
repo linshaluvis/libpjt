@@ -114,7 +114,7 @@ class BorrowerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Borrower
-        fields = ['id', 'book', 'user', 'borrow_date', 'return_date', 'fine', 'returned']
+        fields = ['id', 'book', 'user', 'borrow_date', 'return_date', 'fine', 'returned','paid']
 class OrderSerializer(serializers.ModelSerializer):
     book = BookSerializer()
     user = UserSerializer()

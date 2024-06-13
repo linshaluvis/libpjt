@@ -1,18 +1,23 @@
 .checkout {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+  background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 3rem auto; /* Center the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   }
   
   .checkout h1, .checkout h2 {
     text-align: center;
+    color: #000;
   }
   
   .order-summary ul {
     list-style-type: none;
     padding: 0;
+    color: #310059;
+    font-weight: 400;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
   
   .order-summary li {
@@ -34,7 +39,7 @@
   button {
     width: 100%;
     padding: 10px;
-    background-color: #28a745;
+    background-color: #5d1e70; /* Bootstrap info color */
     color: white;
     border: none;
     border-radius: 4px;

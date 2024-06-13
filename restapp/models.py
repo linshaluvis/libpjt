@@ -48,7 +48,7 @@ class Borrower(models.Model):
     borrow_date = models.DateField(auto_now_add=True)
     return_date = models.DateField(null=True, blank=True)
     fine = models.IntegerField()
-    returned = models.CharField(max_length=3,default='No')
+    returned = models.CharField(max_length=255,default='No')
     paid = models.BooleanField(default=False) 
 
 

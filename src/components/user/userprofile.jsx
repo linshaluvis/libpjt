@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import UserNavbar from '../usernavbar/usernavbar';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; 
+import Footer from '../Footer/Footer';
 
 const ProfileContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
+  background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 3rem auto; /* Center the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+
 `;
 
 const Header = styled.h1`
@@ -36,15 +38,14 @@ const MemberImage = styled.img`
 
 const InfoText = styled.p`
   font-size: 16px;
-  color: #555;
+  color: #333;
 `;
 
 const EditButton = styled.button`
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
-  background-color: #007bff;
-  border: none;
+  background-color: #6c43ad; 
   border-radius: 4px;
   cursor: pointer;
   margin-top: 20px;
@@ -117,14 +118,16 @@ const Profile = () => {
               alt="Member Image"
               onError={(e) => { e.target.onerror = null; e.target.src = 'fallback-image-url'; }}
             />
-            <InfoText>Name: {member.user.first_name} {member.user.last_name}</InfoText>
-            <InfoText>Email: {member.user.email}</InfoText>
-            <InfoText>Phone: {member.number}</InfoText>
+            <InfoText><b>Name:</b> {member.user.first_name} {member.user.last_name}</InfoText>
+            <InfoText><b>Email:</b> {member.user.email}</InfoText>
+            <InfoText><b>Phone:</b> {member.number}</InfoText>
             {/* Display other member fields */}
             <EditButton onClick={handleEditProfile}>Edit Profile</EditButton>
           </MemberInfo>
         )}
       </ProfileContainer>
+       <br></br>
+        <Footer/>
     </div>
   );
 };

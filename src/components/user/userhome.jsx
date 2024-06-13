@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Button from '@mui/material/Button';
+import Footer from '../Footer/Footer';
 
 function UserHome() {
     const [categories, setCategories] = useState([]);
@@ -148,18 +149,18 @@ function UserHome() {
 
                 <h2 className="text-center mt-5">Books</h2>
 
-                <Grid container spacing={2} className="mt-3">
+                <Grid container spacing={2} className="mt-3 user-cont">
                     {books.map(book => (
                         <Grid item xs={12} sm={6} md={4} key={book.id}>
-                            <div className="book-item">
+                            <div className="book-item h-100">
                                 <div className="book-image">
                                     {book.image && <img src={book.image} alt={book.book} />}
                                 </div>
                                 <div className="book-details">
                                     <div className="book-title">{book.book}</div>
-                                    <div className="book-author">by {book.author}</div>
+                                    <div className="book-author text-danger">by {book.author}</div>
                                     <div className="book-price">₹ {book.price}</div>
-                                    <div className="book-category">Category: {book.category.category_name}</div>
+                                    <div className="book-category text-dark">Category: {book.category.category_name}</div>
                                     <div className="book-stock">Stock: {book.stock}</div>
                                     <div className="book-status">
                                         {book.stock > 0 ? <p>Status: Available</p> : <p>Status: Out of Stock</p>}
@@ -171,6 +172,9 @@ function UserHome() {
                                         <Button variant="contained" color="secondary" className="mx-2" onClick={() => handleBorrowBook(book.id)}>
                                             <FontAwesomeIcon icon={faShoppingBag} /> Rent
                                         </Button>
+                                        </div>
+                                        <div className="button-container mt-3">
+
                                         <Button variant="contained" color="success" onClick={() => handleBuyBook(book.id)}>
                                             <FontAwesomeIcon icon={faDollarSign} /> Buy
                                         </Button>
@@ -181,6 +185,8 @@ function UserHome() {
                     ))}
                 </Grid>
             </div>
+            <br></br>
+        <Footer/>
         </div>
     );
 }

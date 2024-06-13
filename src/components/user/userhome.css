@@ -1,158 +1,271 @@
 /* App.css */
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2px;
-    font-family: Arial, sans-serif;
-    text-align: center; /* Center the text in the container */
+.user-cont {
+  margin: 0 auto;
+  padding: 2px;
+  font-family: Arial, sans-serif;
+  text-align: center; /* Center the text in the container */
 }
 
 h1 {
-    color: #333;
+  color: #333;
 }
 
 .category-list, .book-list {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
+
 }
 
 .category-item, .book-item {
-    background: #f9f9f9;
-    margin: 10px auto; /* Center the list items horizontally */
-    padding: 15px;
-    border-radius: 5px;
-    transition: background 0.3s;
-    display: flex; /* Use flexbox to align items */
-    flex-direction: column; /* Set flex direction to column */
-    align-items: center; /* Center items horizontally */
-    max-width: 600px; /* Constrain the width of list items */
-    
+  background: #f9f9f9;
+  margin: 10px auto; /* Center the list items horizontally */
+  padding: 15px;
+  border-radius: 5px;
+  transition: background 0.3s;
+  display: flex; /* Use flexbox to align items */
+  flex-direction: column; /* Set flex direction to column */
+  align-items: center; /* Center items horizontally */
+  max-width: 600px; /* Constrain the width of list items */
+
+  
 }
 
 .category-item:hover, .book-item:hover {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 .book-image img {
-    max-width: 300px;
-    max-height: 200px;
-    margin-bottom: 15px; /* Add margin below the image */
-    border-radius: 5px;
+  max-width: 300px;
+  max-height: 200px;
+  margin-bottom: 15px; /* Add margin below the image */
+  border-radius: 5px;
 }
 
 .book-details {
-    text-align: center; /* Center align text */
+  text-align: center; /* Center align text */
+
 }
 .book-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Distribute items evenly along the main axis */
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between; /* Distribute items evenly along the main axis */
 }
 
 .book-item {
-  width: calc(33.33% - 10px); /* Adjust width to fit three items in a row with spacing */
-  margin-bottom: 20px; /* Adjust spacing between rows */
+width: calc(33.33% - 10px); /* Adjust width to fit three items in a row with spacing */
+margin-bottom: 20px; /* Adjust spacing between rows */
+
 }
 
 
 .book-title {
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #444;
-    margin-bottom: 5px; /* Add margin below the title */
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #444;
+  margin-bottom: 5px; /* Add margin below the title */
 }
 
 .book-author, .book-category {
-    font-size: 0.9em;
-    color: #777;
+  font-size: 0.9em;
+  color: #7f6bb5;
 }
 
 .book-category {
-    margin-top: 5px;
-    font-style: italic;
+  margin-top: 5px;
+  font-style: italic;
 }
 .button-container {
-    display: flex;
-    gap: 1px; /* Adds space between buttons */
+  display: flex;
+  gap: 1px; /* Adds space between buttons */
 }
 
 .cart-button, .rent-button, .buy-button {
-    display: flex;
-    align-items: center;
-    gap: 1px; /* Adds space between icon and text */
-    padding: 1px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 1px; /* Adds space between icon and text */
+  padding: 1px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .cart-button {
-    background-color: #4CAF50; /* Green */
-    color: white;
+  background-color: #4CAF50; /* Green */
+  color: white;
 
 }
 
 .rent-button {
-    background-color: #2196F3; /* Blue */
-    color: white;
+  background-color: #2196F3; /* Blue */
+  color: white;
 }
 
 .buy-button {
-    background-color: #f44336; /* Red */
-    color: white;
+  background-color: #f44336; /* Red */
+  color: white;
 }
 .container {
-    padding: 20px;
-  }
-  
-  .book-item {
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
-    background-color: #f9f9f9;
-  }
-  
-  .book-image img {
+  padding: 20px;
+}
+
+.book-item {
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.book-image img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.book-details {
+  margin-top: 10px;
+}
+
+.book-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.book-author {
+  color: #555;
+}
+
+.book-price {
+  color: #007bff;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.book-category,
+.book-stock,
+.book-status {
+  margin-top: 5px;
+}
+
+.button-container button {
+  margin-top: 10px;
+  width: 75%;
+}
+
+.button-container button:not(:last-child) {
+  margin-right: 8px;
+}
+/* Ensure you have appropriate styling in your CSS for responsive design */
+.container {
+    padding: 15px;
+}
+
+.book-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.book-item:hover {
+    transform: translateY(-5px);
+}
+
+.book-image img {
     width: 100%;
     height: auto;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
+}
+
+.book-details {
+    padding: 15px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.book-title {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.book-author, .book-price, .book-category, .book-stock, .book-status {
+    margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+    .book-item {
+        flex-direction: column;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
+
+    .button-container Button {
+        margin: 5px 0;
+    }
+}
+.container {
+  padding: 15px;
+}
+
+.book-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+}
+
+.book-image img {
+  width: 100%;
+  height: auto;
+}
+
+.book-details {
+  padding: 15px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.book-title {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.book-author, .book-price, .book-category, .book-stock, .book-status {
+  margin: 5px 0;
+}
+
+.button-container Button {
+  flex: 1;
+  margin: 5px 2px;
+}
+
+@media (max-width: 768px) {
+  .button-container {
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .book-details {
-    margin-top: 10px;
+
+  .button-container Button {
+      width: 100%;
+      margin: 5px 0;
   }
-  
-  .book-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .book-author {
-    color: #555;
-  }
-  
-  .book-price {
-    color: #007bff;
-    font-size: 16px;
-    margin-top: 5px;
-  }
-  
-  .book-category,
-  .book-stock,
-  .book-status {
-    margin-top: 5px;
-  }
-  
-  .button-container button {
-    margin-top: 10px;
-    width: 75%;
-  }
-  
-  .button-container button:not(:last-child) {
-    margin-right: 8px;
-  }
-  
+}

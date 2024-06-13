@@ -127,7 +127,7 @@ const EditBook = () => {
                     <input type="file" name="image" onChange={handleImageChange} />
                     {formData.image && <img src={`http://localhost:8000${formData.image}`} alt={formData.book} width="100" />}
                 </div>
-                <button type="submit">Update Book</button>
+                <button className='up-button' type="submit">Update Book</button>
             </form>
         </div>
         <br></br>

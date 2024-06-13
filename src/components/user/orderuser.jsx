@@ -3,6 +3,7 @@ import axios from 'axios';
 import UserNavbar from '../usernavbar/usernavbar';
 import './OrdersPage.css'; // Import the CSS file
 import styled from 'styled-components';
+import Footer from '../Footer/Footer';
 
 
 const Container = styled.div`
@@ -28,7 +29,7 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.th`
-    background-color: #89253e;
+    background-color: 00004d;
     color: white;
     padding: 10px;
     text-align: center;
@@ -122,6 +123,8 @@ const OrdersPage = () => {
 
         </div>
       </div>
+      <br></br>
+        <Footer/>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminNavbar from '../adminnavbar/adminnavbar';
 import Footer from '../Footer/Footer';
-
+import './borrowadmin.css';
 
 const Borrow = () => {
     const [borrows, setBorrows] = useState([]);
@@ -34,6 +34,7 @@ const Borrow = () => {
         const fetchBorrows = async () => {
             try {
                 const response = await axios.get('http://localhost:8000/borrow_admin/');
+                console.log(response.data);
                 setBorrows(response.data);
                 setLoading(false);
             } catch (error) {
@@ -53,7 +54,8 @@ const Borrow = () => {
     if (error) {
         return <div>Error: {error}</div>;
     }
-
+    const paidStyle = { color: 'green' };
+    const notPaidStyle = { color: 'red' };
     return (
         <div>
             <AdminNavbar pendingCount={pendingCount} />
@@ -71,6 +73,7 @@ const Borrow = () => {
                                 <th>Email</th>
                                 <th>Returned</th>
                                 <th>Fine</th>
+                                <th>Paid</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,16 +85,19 @@ const Borrow = () => {
                                     <td>{borrow.borrow_date}</td>
                                     <td>{borrow.return_date}</td>
                                     <td>{borrow.user.email}</td>
-                                    <td>{borrow.returned ? 'Yes' : 'No'}</td>
+                                    <td>{borrow.returned}</td>
                                     <td>{borrow.fine}</td>
+                                    <td style={borrow.fine > 0 ? notPaidStyle : paidStyle}>
+                                        {borrow.fine > 0 ? 'Not Paid' : 'Paid'}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             </div>
-            <br></br>
-            <Footer/>
+            <br />
+            <Footer />
         </div>
     );
 }

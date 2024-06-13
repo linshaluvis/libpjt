@@ -3,6 +3,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import UserNavbar from '../usernavbar/usernavbar';
 import { Modal, Button as BootstrapButton, Form } from 'react-bootstrap';
+import Swal from "sweetalert2";
+import Footer from '../Footer/Footer';
 
 const Container = styled.div`
     padding: 20px;
@@ -27,7 +29,7 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.th`
-    background-color: #343a40;
+    background-color: #711aa0;
     color: #fff;
     padding: 12px;
     text-align: left;
@@ -72,6 +74,153 @@ const Header = styled.h2`
     margin-bottom: 20px;
     color: #343a40;
     text-align: center;
+`;
+
+const StyledModal = styled(Modal)`
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+    }
+
+    .modal-header {
+        background-color: #711aa0;
+        color: white;
+        border-bottom: none;
+        padding: 20px;
+    }
+
+    .modal-title {
+        font-size: 1.75rem;
+        font-weight: bold;
+    }
+
+    .modal-body {
+        background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+        text-align: center;
+        color: #333;
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 15px 20px;
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        justify-content: center;
+
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        margin-left: 1.5rem;
+        padding: 10px;
+        justify-content: center;
+
+
+    }
+
+    .form-control {
+        justify-content: center;
+
+        width: 120%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        margin-left: 4.5rem;
+        
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .btn-primary {
+        background-color: #6c43ad;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .modal-content {
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .modal-header {
+            padding: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 10px;
+        }
+
+        .btn-secondary, .btn-primary {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .modal-content {
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .form-control {
+        justify-content: center;
+
+        width: 80%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+
+        .modal-header {
+            padding: 10px;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        .modal-footer {
+            padding: 5px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-secondary, .btn-primary {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+    }
 `;
 
 const Borrow = () => {
@@ -156,7 +305,6 @@ const Borrow = () => {
 
         try {
             await axios.post(`http://localhost:8000/pay_fine/${selectedBorrowId}/`, {
-                
                 firstName: firstName.value,
                 lastName: lastName.value,
                 city: city.value,
@@ -169,11 +317,13 @@ const Borrow = () => {
                     'Authorization': `Token ${token}`
                 }
             });
-            console.log("successful")
-            alert("payment successful")
 
             // Close the modal and re-fetch borrow details
             handleCloseModal();
+            Toast.fire({
+                icon: "success",
+                title: `Payment successful`,
+            });
             fetchData();
         } catch (error) {
             console.error('Error paying fine:', error);
@@ -187,6 +337,18 @@ const Borrow = () => {
     if (error) {
         return <Container>Error: {error}</Container>;
     }
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        },
+    });
 
     return (
         <div>
@@ -233,7 +395,6 @@ const Borrow = () => {
                                                 Pay Fine
                                             </Button>
                                         )}
-                                        
                                     </TableData>
                                 </tr>
                             ))}
@@ -241,7 +402,7 @@ const Borrow = () => {
                     </Table>
                 </TableContainer>
             </Container>
-            <Modal show={showModal} onHide={handleCloseModal}>
+            <StyledModal show={showModal} onHide={handleCloseModal}>
                 <Form onSubmit={handlePayFine}>
                     <Modal.Header closeButton>
                         <Modal.Title>Pay Fine</Modal.Title>
@@ -285,7 +446,9 @@ const Borrow = () => {
                         </BootstrapButton>
                     </Modal.Footer>
                 </Form>
-            </Modal>
+            </StyledModal>
+            <br></br>
+            <Footer />
         </div>
     );
 };

@@ -556,9 +556,11 @@ def profile_view(request):
         member_data = request.data
         user = request.user
         member_data = request.data
+        
 
         # Update CustomUser fields
         user.first_name = member_data.get('first_name', user.first_name)
+        print( user.first_name)
         user.last_name = member_data.get('last_name', user.last_name)
         user.email = member_data.get('email', user.email)
         user.save()
@@ -589,22 +591,20 @@ def cart_items(request):
     ]
     return JsonResponse({'items': items, 'total_price': total_price})
 
-@permission_classes([IsAuthenticated])
 @api_view(['POST'])  # Using POST for increase and decrease quantity
 def increase_quantity(request, book_id):
     try:
-        cart_item = cartitem.objects.get(id=book_id)
+        cart_item = cartitem.objects.get(book_id=book_id)
         cart_item.quantity += 1
         cart_item.save()
         return Response({"message": "Quantity increased", "quantity": cart_item.quantity}, status=200)
     except cartitem.DoesNotExist:
         return Response({"error": "Item not found"}, status=404)
 
-@permission_classes([IsAuthenticated])
 @api_view(['POST'])  # Using POST for increase and decrease quantity
 def decrease_quantity(request, book_id):
     try:
-        cart_item = cartitem.objects.get(id=book_id)
+        cart_item = cartitem.objects.get(book_id=book_id)
         if cart_item.quantity > 1:
             cart_item.quantity -= 1
             cart_item.save()
@@ -617,6 +617,7 @@ def decrease_quantity(request, book_id):
 @api_view(['DELETE'])
 def remove_item(request, item_id):
     cart_item = cartitem.objects.get(id=item_id)
+    print(item_id)
 
     cart_item.delete()
     return cart_items(request)
@@ -671,6 +672,16 @@ def checkout_success(request):
     # send_mail(subject, message, settings.EMAIL_HOST_USER, [user1.email])
     
     return JsonResponse({'status': 'success', 'user_orders': list(user_orders.values())}, status=200)
+
+
+@api_view(['GET'])
+def check_email_exists(request):
+    email = request.query_params.get('email', None)
+    if email:
+        if CustomUser.objects.filter(email=email).exists():
+            return Response({'exists': True})
+    return Response({'exists': False})
+
 @api_view(['POST'])
 def checkUserName(request):
     if request.method == 'POST':
@@ -766,12 +777,16 @@ def return_book(request, pk):
         fine = calculate_fine(borrower.borrow_date, book1.price, book_missing)
         borrower.fine = fine
         borrower.return_date = date.today()
-        borrower.returned = 'Yes'
+        borrower.returned = 'missing'
         borrower.save(update_fields=['fine', 'returned', 'return_date'])
         
         if not book_missing:
             book1.stock += 1
             book1.save(update_fields=['stock'])
+            borrower.fine = fine
+            borrower.return_date = date.today()
+            borrower.returned = 'returned'
+            borrower.save(update_fields=['fine', 'returned', 'return_date'])
             return JsonResponse({'status': 'success', 'message': 'Book returned successfully'})
         else:
             return JsonResponse({'status': 'error', 'message': 'Book is missing'})
@@ -933,37 +948,68 @@ def pay_fine(request, pk):
         return JsonResponse({'error': str(e)}, status=400)
 import re
 import string 
-@permission_classes([IsAuthenticated])        
-def change_password(request):
-    if request.method == 'POST':
-        current_password = request.POST.get('current_password')
-        new_password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
-        regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&()_+{}\[\]:;<>,.?~\\-]).+$')
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])     
+# def change_password(request):
+#         current_password = request.POST.get('current_password')
+#         new_password = request.POST.get('password')
+#         confirm_password = request.POST.get('confirm_password')
+#         regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&()_+{}\[\]:;<>,.?~\\-]).+$')
 
-        user = request.user
+#         user = request.user
 
-        if not user.check_password(current_password):
-            return JsonResponse({'status': 'error', 'message': 'Incorrect current password.'}, status=400)
+#         if not user.check_password(current_password):
+#             return JsonResponse({'status': 'error', 'message': 'Incorrect current password.'}, status=400)
         
-        if new_password != confirm_password:
-            return JsonResponse({'status': 'error', 'message': 'New password and confirmation do not match.'}, status=400)
+#         if new_password != confirm_password:
+#             return JsonResponse({'status': 'error', 'message': 'New password and confirmation do not match.'}, status=400)
         
-        if len(new_password) < 6:
-            return JsonResponse({'status': 'error', 'message': 'Password is too short.'}, status=400)
+#         if len(new_password) < 6:
+#             return JsonResponse({'status': 'error', 'message': 'Password is too short.'}, status=400)
         
-        if not any(char.isdigit() for char in new_password):
-            return JsonResponse({'status': 'error', 'message': 'Password must contain at least one digit.'}, status=400)
+#         if not any(char.isdigit() for char in new_password):
+#             return JsonResponse({'status': 'error', 'message': 'Password must contain at least one digit.'}, status=400)
         
-        if not any(char.isalpha() for char in new_password):
-            return JsonResponse({'status': 'error', 'message': 'Password must contain at least one letter.'}, status=400)
+#         if not any(char.isalpha() for char in new_password):
+#             return JsonResponse({'status': 'error', 'message': 'Password must contain at least one letter.'}, status=400)
         
-        if not any(char in string.punctuation for char in new_password):
-            return JsonResponse({'status': 'error', 'message': 'Password must contain at least one special character.'}, status=400)
+#         if not any(char in string.punctuation for char in new_password):
+#             return JsonResponse({'status': 'error', 'message': 'Password must contain at least one special character.'}, status=400)
         
-        user.set_password(new_password)
-        user.save()
+#         user.set_password(new_password)
+#         user.save()
         
-        return JsonResponse({'status': 'success', 'message': 'Password changed successfully.'})
+#         return JsonResponse({'status': 'success', 'message': 'Password changed successfully.'})
     
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    user = request.user
+    data = request.data
+
+    current_password = data.get('current_password')
+    new_password = data.get('password')
+    confirm_password = data.get('confirm_password')
+
+    if not user.check_password(current_password):
+        return JsonResponse({'status': 'error', 'message': 'Current password is incorrect'}, status=400)
+
+    if new_password != confirm_password:
+        return JsonResponse({'status': 'error', 'message': 'New passwords do not match'}, status=400)
+    if len(new_password) < 6:
+        return JsonResponse({'status': 'error', 'message': 'Password is too short.'}, status=400)
+    if not any(char.isdigit() for char in new_password):
+        return JsonResponse({'status': 'error', 'message': 'Password must contain at least one digit.'}, status=400)
+    if not any(char.isalpha() for char in new_password):
+        return JsonResponse({'status': 'error', 'message': 'Password must contain at least one letter.'}, status=400)
+        
+    if not any(char in string.punctuation for char in new_password):
+        return JsonResponse({'status': 'error', 'message': 'Password must contain at least one special character.'}, status=400)
+        
+
+    user.set_password(new_password)
+    user.save()
+
+    return JsonResponse({'status': 'success', 'message': 'Password changed successfully'})

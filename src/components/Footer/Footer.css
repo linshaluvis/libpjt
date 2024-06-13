@@ -1,7 +1,7 @@
 /* General styling for the footer */
 .footer {
     width: 100%;
-    background: linear-gradient(45deg, #cc09cc 0%, #cccad7 100%);
+    background: linear-gradient(45deg, #605d5d 0%, #93046f 100%);
     color: #fff;
     text-align: center;
     padding: 20px 0;
@@ -11,23 +11,28 @@
 
 .footer h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 27px;
     font-weight: bold;
     color: #070436;
+    text-align: left;
 
 }
 
 .footer-col {
     display: flex;
-    justify-content: center;
+    justify-content: right;
     margin-top: 10px;
     color: #02010f;
+    text-align: right;
+    margin-right: 20px;
 
 }
 
 .footer-col ul {
     list-style: none;
     padding: 0;
+    text-align: right;
+
 }
 
 .footer-col li {
@@ -35,6 +40,7 @@
     align-items: center;
     margin-bottom: 10px;
     color: #02010f;
+    text-align: right;
 
 }
 

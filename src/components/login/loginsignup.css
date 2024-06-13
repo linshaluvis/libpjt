@@ -10,17 +10,19 @@ body{
     align-items: center;
     justify-content: center;
     font-family: 'Arial', sans-serif;
+    padding-top: 30px;
+
 }
 
 .Container-login {
     background: #fff;
-    padding: 40px;
+    padding: 50px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 30px;
     margin-top: 20px;
     background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
 
@@ -46,11 +48,14 @@ margin-bottom: 10px;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    padding: 15px;
 }
 
 .inputs .input img {
     width: 25px;
     margin-right: 10px;
+    padding: 2px;
+
 }
 
 .inputs .input input {

@@ -43,4 +43,59 @@
     font-size: 11px;
     cursor: pointer;
     border-radius: 5px;
+    align-items: center;
+    
   }
+  @media (max-width: 768px) {
+    .table {
+      font-size: 14px;
+    }
+  
+    .quantity button {
+      padding: 5px;
+    }
+  
+    .rem-button {
+      padding: 5px;
+    }
+  
+    
+  }
+  
+  .checkout-button {
+    display: block;
+    max-width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #5d1e70; /* Bootstrap info color */
+  }
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 14px;
+  }
+
+  .quantity button {
+    padding: 5px;
+  }
+
+  .rem-button {
+    padding: 5px;
+  }
+
+  .checkout-button {
+    width: 100%;
+    max-width: none;
+    font-size: 18px;
+    padding: 15px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

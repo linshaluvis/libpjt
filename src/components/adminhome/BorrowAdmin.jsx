@@ -59,7 +59,7 @@ const Borrow = () => {
     return (
         <div>
             <AdminNavbar pendingCount={pendingCount} />
-            <div className="container">
+            <div className="container-borrow">
                 <h2 className="text-center mt-4 text-uppercase">Rent Details</h2>
                 <div className="table-responsive mt-4">
                     <table className="table table-striped">
@@ -80,7 +80,7 @@ const Borrow = () => {
                             {borrows.map((borrow, index) => (
                                 <tr key={borrow.id}>
                                     <td>{index + 1}</td>
-                                    <td>{borrow.user.first_name}</td>
+                                    <td>{borrow.user.first_name} {borrow.user.last_name}</td>
                                     <td>{borrow.book.book}</td>
                                     <td>{borrow.borrow_date}</td>
                                     <td>{borrow.return_date}</td>

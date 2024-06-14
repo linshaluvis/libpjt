@@ -16,6 +16,7 @@ function UserHome() {
     const [books, setBooks] = useState([]);
     const [userName, setUserName] = useState('');
     const [overdueBooks, setOverdueBooks] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -127,11 +128,31 @@ function UserHome() {
         }
     };
 
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const filteredBooks = books.filter(book => 
+        book.book.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        book.author.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div>
             <UserNavbar />
             <div className="container mt-5">
                 <h1 className="text-center mb-4">Welcome, {userName}!</h1>
+
+                {/* Search Input */}
+                <div className="search-container text-center  mb-4">
+                    <input
+                        type="text"
+                        placeholder="Search by book name or author"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        className="form-control search-input"
+                    />
+                </div>
 
                 {/* Overdue Books Alert */}
                 {overdueBooks.length > 0 && (
@@ -150,7 +171,7 @@ function UserHome() {
                 <h2 className="text-center mt-5">Books</h2>
 
                 <Grid container spacing={2} className="mt-3 user-cont">
-                    {books.map(book => (
+                    {filteredBooks.map(book => (
                         <Grid item xs={12} sm={6} md={4} key={book.id}>
                             <div className="book-item h-100">
                                 <div className="book-image">
@@ -172,9 +193,8 @@ function UserHome() {
                                         <Button variant="contained" color="secondary" className="mx-2" onClick={() => handleBorrowBook(book.id)}>
                                             <FontAwesomeIcon icon={faShoppingBag} /> Rent
                                         </Button>
-                                        </div>
-                                        <div className="button-container mt-3">
-
+                                    </div>
+                                    <div className="button-container mt-3">
                                         <Button variant="contained" color="success" onClick={() => handleBuyBook(book.id)}>
                                             <FontAwesomeIcon icon={faDollarSign} /> Buy
                                         </Button>
@@ -186,7 +206,7 @@ function UserHome() {
                 </Grid>
             </div>
             <br></br>
-        <Footer/>
+            <Footer/>
         </div>
     );
 }

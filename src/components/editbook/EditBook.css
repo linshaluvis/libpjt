@@ -1,9 +1,12 @@
 /* EditBook.css */
 .edit-book-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+    background: linear-gradient(45deg, #c487c4 0%, #b5afe3 100%);
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 3rem auto; /* Center the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  
 }
 
 h1 {

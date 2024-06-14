@@ -79,7 +79,7 @@ function AddBook() {
       });
       console.log(res.status)
       if (res.status === 201) {
-        alert('Book added successfully');
+        // alert('Book added successfully');
         navigate('/showbook');  // Redirect to the admin panel or any other page
       }
     } catch (err) {

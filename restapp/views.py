@@ -571,10 +571,13 @@ def profile_view(request):
             print(serializer.data)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
-    
 def cart_items(request):
-    cart_items = cartitem.objects.all()
+    user = request.user
+    print(user)
+    cart_items = cartitem.objects.filter(user=user)
     total_price = sum(item.book.price * item.quantity for item in cart_items)
     items = [
         {
@@ -605,6 +608,7 @@ def increase_quantity(request, book_id):
 def decrease_quantity(request, book_id):
     try:
         cart_item = cartitem.objects.get(book_id=book_id)
+        print(book_id)
         if cart_item.quantity > 1:
             cart_item.quantity -= 1
             cart_item.save()
@@ -613,14 +617,66 @@ def decrease_quantity(request, book_id):
             return Response({"message": "Quantity cannot be less than 1"}, status=400)
     except cartitem.DoesNotExist:
         return Response({"error": "Item not found"}, status=404)
+    
+
 @permission_classes([IsAuthenticated])
 @api_view(['DELETE'])
 def remove_item(request, item_id):
-    cart_item = cartitem.objects.get(id=item_id)
-    print(item_id)
+    try:
+        cart_item = cartitem.objects.get(id=item_id, user=request.user)
+        book_instance = cart_item.book
+        
+        # Increase the book stock by 1
+        book_instance.stock += 1
+        book_instance.save()
+        
+        cart_item.delete()
 
-    cart_item.delete()
-    return cart_items(request)
+        # Manually call the cart_items logic
+        user = request.user
+        items = cartitem.objects.filter(user=user)
+        total_price = sum(item.book.price * item.quantity for item in items)
+
+        items_data = [
+            {
+                'id': item.id,
+                'book': {
+                    'title': item.book.book,
+                    'author': item.book.author,
+                },
+                'quantity': item.quantity
+            }
+            for item in items
+        ]
+
+        data = {
+            'items': items_data,
+            'total_price': total_price
+        }
+
+        return JsonResponse(data)
+    except cartitem.DoesNotExist:
+        return Response({'error': 'Item not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# @permission_classes([IsAuthenticated])
+# @api_view(['DELETE'])
+# def remove_item(request, item_id):
+#     cart_item = cartitem.objects.get(id=item_id)
+#     print(cart_item)
+#     book_instance = cart_item.book   
+#     print(book_instance)
+
+#     # Increase the book's stock by 1
+#     book_instance.stock += 1
+#     book_instance.save()    
+
+#     print(item_id)
+
+#     cart_item.delete()
+    
+#     return cart_items(request)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

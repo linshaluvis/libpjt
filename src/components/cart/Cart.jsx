@@ -7,8 +7,6 @@ import Footer from '../Footer/Footer';
 import { faShoppingCart, faShoppingBag, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
-
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -40,15 +38,12 @@ const Cart = () => {
   const increaseQuantity = async (bookId) => {
     if (token) {
       try {
-        const response = await axios.post(`${baseURL}/cart/increase/${bookId}/`, {}, {
+        await axios.post(`${baseURL}/cart/increase/${bookId}/`, {}, {
           headers: {
             'Authorization': `Token ${token}`
           }
         });
         fetchCartItems();
-
-        // setCartItems(response.data.items || []);
-        // setTotalPrice(response.data.total_price || 0);
       } catch (error) {
         console.error('Error increasing quantity:', error);
       }
@@ -60,15 +55,12 @@ const Cart = () => {
   const decreaseQuantity = async (bookId) => {
     if (token) {
       try {
-        const response = await axios.post(`${baseURL}/cart/decrease/${bookId}/`, {}, {
+        await axios.post(`${baseURL}/cart/decrease/${bookId}/`, {}, {
           headers: {
             'Authorization': `Token ${token}`
           }
         });
         fetchCartItems();
-
-        // setCartItems(response.data.items || []);
-        // setTotalPrice(response.data.total_price || 0);
       } catch (error) {
         console.error('Error decreasing quantity:', error);
       }
@@ -87,6 +79,8 @@ const Cart = () => {
         });
         setCartItems(response.data.items || []);
         setTotalPrice(response.data.total_price || 0);
+        alert("item removed")
+
       } catch (error) {
         console.error('Error removing item:', error);
       }
@@ -99,59 +93,55 @@ const Cart = () => {
     <div>
       <UserNavbar />
       <div className="container-cart">
-            <h1 className="text-center text-uppercase text-dark mt-4"   ><FontAwesomeIcon icon={faShoppingCart}/>Shopping Cart</h1>
-            <div className="table-responsive mt-4">
-
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Book name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartItems.length > 0 ? (
-              cartItems.map(item => (
-                <tr key={item.id}>
-                  <td>
-                    {item.book.image && (
-                      <img src={`${baseURL}${item.book.image}`} alt={item.book.name} style={{ width: 100, height: 100 }} />
-                    )}
-                  </td>
-                  <td>{item.book.name}</td>
-                  <td>₹{item.book.price.toFixed(2)}</td>
-                  <td>
-                    <div className="quantity">
-                      <button onClick={() => increaseQuantity(item.book.id)}>+</button>
-                      <span>{item.quantity}</span>
-                      <button onClick={() => decreaseQuantity(item.book.id)}>-</button>
-                    </div>
-                  </td>
-                  <td>
-                    <button className="rem-button btn-danger" onClick={() => handleRemoveItem(item.id)}>Remove</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
+        <h1 className="text-center text-uppercase text-dark mt-4"><FontAwesomeIcon icon={faShoppingCart}/>Shopping Cart</h1>
+        <div className="table-responsive mt-4">
+          <table className="table table-striped">
+            <thead>
               <tr>
-                <td className='text-center' colSpan="5">Your cart is empty</td>
+                <th>Item</th>
+                <th>Book name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {cartItems.length > 0 ? (
+                cartItems.map(item => (
+                  <tr key={item.id}>
+                    <td>
+                      {item.book.image && (
+                        <img src={`${baseURL}${item.book.image}`} alt={item.book.name} style={{ width: 100, height: 100 }} />
+                      )}
+                    </td>
+                    <td>{item.book.name}</td>
+                    <td>₹{item.book.price.toFixed(2)}</td>
+                    <td>
+                      <div className="quantity">
+                        <button onClick={() => increaseQuantity(item.book.id)}>+</button>
+                        <span>{item.quantity}</span>
+                        <button onClick={() => decreaseQuantity(item.book.id)}>-</button>
+                      </div>
+                    </td>
+                    <td>
+                      <button className="rem-button btn-danger" onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className='text-center' colSpan="5">Your cart is empty</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
-        <h5  className='text-center' >Total: ₹{totalPrice.toFixed(2)}</h5>
-        <button  className="checkout-button" onClick={() => window.location.href = '/checkout'}><FontAwesomeIcon icon={faShoppingBag} /> Checkout
-        </button>
+        <h5 className='text-center'>Total: ₹{totalPrice.toFixed(2)}</h5>
+        <button className="checkout-button" onClick={() => window.location.href = '/checkout'}><FontAwesomeIcon icon={faShoppingBag} /> Checkout</button>
       </div>
-      <br></br>
-  <Footer/>
+      <br />
+      <Footer />
     </div>
-   
-
   );
 };
 

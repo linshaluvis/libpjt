@@ -99,7 +99,7 @@ function MemberReg() {
       }
       document.getElementById("warnphone").innerHTML =
         "Please provide a valid Phone Number";
-      alert("Please provide a valid Phone Number");
+      // alert("Please provide a valid Phone Number");
     }
   }
   function handleUsername() {

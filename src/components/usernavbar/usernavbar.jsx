@@ -58,9 +58,9 @@ function OffcanvasExample() {
                                     <Nav.Link href="/cart">
                                         <FontAwesomeIcon icon={faShoppingCart} /> Book CART
                                     </Nav.Link>
-                                    <Nav.Link href="/notifications">
+                                    {/* <Nav.Link href="/notifications">
                                         <FontAwesomeIcon icon={faBell} /> Notifications
-                                    </Nav.Link>
+                                    </Nav.Link> */}
                                     <Nav.Link href="/Memberprofile">
                                         <FontAwesomeIcon icon={faUser} /> Profile
                                     </Nav.Link>
